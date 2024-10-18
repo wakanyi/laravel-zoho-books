@@ -15,6 +15,10 @@ class CreateZohoTokensTables extends Migration
   {
     Schema::create('zoho_tokens', function (Blueprint $table) {
       $table->id();
+      $table->string('token_title');
+      $table->string('access_token');
+      $table->string('refresh_token');
+      $table->unsignedSmallInteger('expires_in', false)->nullable()->comment('Time in minutes');
       $table->timestamps();
     });
   }
