@@ -1,0 +1,15 @@
+# Files
+.phpunit.result.cache
+auth.json
+phpunit.xml
+composer.lock
+dev.md
+qodana.yaml
+
+# Folders
+/.phpunit.cache
+/storage/*.key
+/vendor
+/.fleet
+/.idea
+/.vscode

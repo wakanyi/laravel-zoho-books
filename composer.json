@@ -1,0 +1,70 @@
+{
+  "name": "sumer5020/laravel-zoho-books",
+  "description": "Powerful and streamlined Laravel package for seamless Zoho Books integration, simplifying API interactions for efficient accounting management with comprehensive developer functionality",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "laravel-zoho-books",
+    "laravelZohoBooks",
+    "zohoBooksClient",
+    "zohoBooksApi",
+    "zohoBooks",
+    "zoho",
+    "accounting",
+    "sumer5020",
+    "SOS4IT",
+    "yemenOpenSource",
+    "GermanYemeniEngineersAssociation"
+  ],
+  "version": "1.0.0",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "authors": [
+    {
+      "name": "sumer5020",
+      "email": "sumer5020@outlook.com",
+      "role": "Developer"
+    }
+  ],
+  "scripts": {
+    "test": "vendor/bin/phpunit --colors=always --testdox",
+    "test:unit": "vendor/bin/phpunit --testsuite=Unit --colors=always --testdox",
+    "test:unit:debug": "vendor/bin/phpunit --testsuite=Unit --colors=always --debug",
+    "test:feature": "vendor/bin/phpunit --testsuite=Feature --colors=always --testdox",
+    "test:feature:debug": "vendor/bin/phpunit --testsuite=Feature --colors=always --debug"
+  },
+  "autoload": {
+    "psr-4": {
+      "Sumer5020\\ZohoBooks\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Sumer5020\\ZohoBooks\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": ">=8.2",
+    "illuminate/support": "^10.0|^11.27"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^8.0|^9.5",
+    "phpunit/phpunit": "^10.5|^11.4"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "classmap-authoritative": true,
+    "sort-packages": true,
+    "preferred-install": "dist"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Sumer5020\\ZohoBooks\\ZohoBooksServiceProvider"
+      ],
+      "aliases": {
+        "ZohoBooks": "Sumer5020\\ZohoBooks\\Facades\\ZohoBooksFacade"
+      }
+    }
+  }
+}
