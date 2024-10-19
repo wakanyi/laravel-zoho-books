@@ -36,7 +36,7 @@ class ZohoBooksServiceProvider extends ServiceProvider
      */
     private function registerIsp(): void
     {
-        //
+        $this->app->singleton(\Sumer5020\ZohoBooks\Contracts\AuthenticationInterface::class, \Sumer5020\ZohoBooks\Services\AuthenticationService::class);
     }
 
     /**
