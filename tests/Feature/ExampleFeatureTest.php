@@ -8,6 +8,6 @@ class ExampleFeatureTest extends TestCase
 {
   public function testExample()
   {
-    //
+    $this->assertEquals(1, 1);
   }
 }

@@ -12,7 +12,9 @@ class ZohoTokens extends Model
    * @var array<int, string>
    */
   protected $fillable = [
-    'token_title',
+    'code',
+    'access_token',
+    'refresh_token',
     'expires_in',
   ];
 
@@ -22,6 +24,7 @@ class ZohoTokens extends Model
    * @var array<int, string>
    */
   protected $hidden = [
+    'code',
     'access_token',
     'refresh_token',
   ];

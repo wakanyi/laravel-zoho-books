@@ -19,13 +19,13 @@ return [
 
   /*
   |--------------------------------------------------------------------------
-  | Redirect URL
+  | Redirect URI
   |--------------------------------------------------------------------------
   |
   | Note: Most be the same value that set in zoho console
   |
   */
-  'redirect_url' => env('ZOHO_BOOKS_REDIRECT_URL', ''),
+  'redirect_uri' => env('ZOHO_BOOKS_REDIRECT_URI', ''),
 
   /*
   |--------------------------------------------------------------------------
@@ -62,9 +62,9 @@ return [
   |
   */
 
-  'access_code' => env('ZOHO_BOOKS_ACCESS_CODE'),
+  'access_code' => env('ZOHO_BOOKS_ACCESS_CODE',''),
 
-  'client_id' => env('ZOHO_BOOKS_CLIENT_ID'),
+  'client_id' => env('ZOHO_BOOKS_CLIENT_ID',''),
 
-  'client_secret' => env('ZOHO_BOOKS_CLIENT_SECRET'),
+  'client_secret' => env('ZOHO_BOOKS_CLIENT_SECRET',''),
 ];
