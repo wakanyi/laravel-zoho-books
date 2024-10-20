@@ -1,6 +1,6 @@
 <?php
 
-use Sumer5020\ZohoBooks\Enums\{DataCenterEnum, PlanEnum};
+use Sumer5020\ZohoBooks\Enums\{DataCenterEnum, PlanEnum, ResponseFormatEnum};
 
 return [
 
@@ -16,6 +16,23 @@ return [
   'url' => env('ZOHO_BOOKS_API_URL', DataCenterEnum::UnitedStates->url() . "v3"),
 
   'auth_url' => env('ZOHO_BOOKS_AUTH_URL', DataCenterEnum::UnitedStates->oAuthUrl()),
+
+  /*
+  |--------------------------------------------------------------------------
+  | Zoho Books API Credentials | https://accounts.zoho.com/developerconsole
+  |--------------------------------------------------------------------------
+  |
+  | Note: I used Self Client to generate server-to-server access code with full access scope [ZohoBooks.fullaccess.all]
+  |       We can also be more specific like [ZohoBooks.vendorpayments.ALL,ZohoBooks.settings.ALL,etc...]
+  |       Or very specific like [ZohoBooks.invoices.CREATE,ZohoBooks.invoices.READ,etc...]
+  |
+  */
+
+  'access_code' => env('ZOHO_BOOKS_ACCESS_CODE', ''),
+
+  'client_id' => env('ZOHO_BOOKS_CLIENT_ID', ''),
+
+  'client_secret' => env('ZOHO_BOOKS_CLIENT_SECRET', ''),
 
   /*
   |--------------------------------------------------------------------------
@@ -53,18 +70,12 @@ return [
 
   /*
   |--------------------------------------------------------------------------
-  | Zoho Books API Credentials | https://accounts.zoho.com/developerconsole
+  | Zoho Books Response Format
   |--------------------------------------------------------------------------
   |
-  | Note: I used Self Client to generate server-to-server access code with full access scope [ZohoBooks.fullaccess.all]
-  |       We can also be more specific like [ZohoBooks.vendorpayments.ALL,ZohoBooks.settings.ALL,etc...]
-  |       Or very specific like [ZohoBooks.invoices.CREATE,ZohoBooks.invoices.READ,etc...]
+  | Note: Responses will be returned in support json, csv and pdf formats.
   |
   */
 
-  'access_code' => env('ZOHO_BOOKS_ACCESS_CODE',''),
-
-  'client_id' => env('ZOHO_BOOKS_CLIENT_ID',''),
-
-  'client_secret' => env('ZOHO_BOOKS_CLIENT_SECRET',''),
+  'response_format' => env('ZOHO_BOOKS_RESPONSE_FORMAT', ResponseFormatEnum::JSON),
 ];

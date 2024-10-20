@@ -2,11 +2,6 @@
 
 namespace Sumer5020\ZohoBooks\Contracts;
 
-/**
- * @method string createAccessToken() Create a new access token.
- * @method string refreshAccessToken(string $refreshToken) Refresh the access token using a refresh token.
- * @method bool revokeRefreshAccessToken(string $token, string $refreshToken) Revoke the refresh token.
- */
 interface AuthenticationInterface
 {
   /**

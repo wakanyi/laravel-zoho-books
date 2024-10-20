@@ -54,6 +54,6 @@ class AuthenticationUnitTest extends TestCase
     
     $status = ZohoBooksFacade::authentications()->revokeRefreshAccessToken($zohoToken?->access_token, $zohoToken?->refresh_token);
 
-    $this->assertEquals(true, $status);
+    $this->assertTrue($status);
   }
 }
