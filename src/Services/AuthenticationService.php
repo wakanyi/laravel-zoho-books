@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Arr;
 use Sumer5020\ZohoBooks\Contracts\AuthenticationInterface;
 use Sumer5020\ZohoBooks\Models\ZohoTokens;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class AuthenticationService
