@@ -43,9 +43,9 @@ class AuthenticationService implements AuthenticationInterface
 
                 ZohoTokens::create([
                     'code' => config('zohoBooks.access_code'),
-                    'access_token' => Arr::get($zohoToken, 'access_token', null),
-                    'refresh_token' => Arr::get($zohoToken, 'refresh_token', null),
-                    'expires_in' => Arr::get($zohoToken, 'expires_in', null),
+                    'access_token' => Arr::get($zohoToken, 'access_token', ''),
+                    'refresh_token' => Arr::get($zohoToken, 'refresh_token', ''),
+                    'expires_in' => Arr::get($zohoToken, 'expires_in', 0),
                 ]);
 
                 return $zohoToken['access_token'];
@@ -83,7 +83,7 @@ class AuthenticationService implements AuthenticationInterface
                 $zohoToken = $response->json();
 
                 ZohoTokens::where('refresh_token', $refreshToken)
-                    ->update(['access_token' => Arr::get($zohoToken, 'access_token', null)]);
+                    ->update(['access_token' => Arr::get($zohoToken, 'access_token', '')]);
 
                 return $zohoToken['access_token'];
             } else {

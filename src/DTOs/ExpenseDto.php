@@ -3,196 +3,204 @@
 namespace Sumer5020\ZohoBooks\DTOs;
 
 /**
- * Class ExpenseDTO
+ * Class ExpenseDto
  * Data Transfer Object for an Expense.
  */
 class ExpenseDto
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string Unique ID of the expense */
-    public string $expense_id;
+     private string $expense_id;
 
     /** @var string Transaction ID */
-    public string $transaction_id;
+     private string $transaction_id;
 
     /** @var string Transaction type */
-    public string $transaction_type;
+     private string $transaction_type;
 
-    /** @var string GST identification number (🇮🇳 only) */
-    public string $gst_no;
+    /** @var string GST identification number (IN only) */
+     private string $gst_no;
 
-    /** @var string GST treatment (🇮🇳 only) */
-    public string $gst_treatment;
+    /** @var string GST treatment (IN only) */
+     private string $gst_treatment;
 
-    /** @var string Tax treatment (GCC, 🇰🇪, 🇿🇦 only) */
-    public string $tax_treatment;
+    /** @var string Tax treatment (GCC, KE, ZA only) */
+     private string $tax_treatment;
 
-    /** @var string Destination of supply (🇮🇳 only) */
-    public string $destination_of_supply;
+    /** @var string Destination of supply (IN only) */
+     private string $destination_of_supply;
 
-    /** @var string Destination of supply state (🇮🇳 only) */
-    public string $destination_of_supply_state;
+    /** @var string Destination of supply state (IN only) */
+     private string $destination_of_supply_state;
 
     /** @var string Place of supply (GCC only) */
-    public string $place_of_supply;
+     private string $place_of_supply;
 
-    /** @var string HSN/SAC code (🇮🇳, 🇰🇪 only) */
-    public string $hsn_or_sac;
+    /** @var string HSN/SAC code (IN, KE only) */
+     private string $hsn_or_sac;
 
-    /** @var string Source of supply (🇮🇳 only) */
-    public string $source_of_supply;
+    /** @var string Source of supply (IN only) */
+     private string $source_of_supply;
 
     /** @var string Name of the paid through account */
-    public string $paid_through_account_name;
+     private string $paid_through_account_name;
 
     /** @var string VAT registration number */
-    public string $vat_reg_no;
+     private string $vat_reg_no;
 
     /** @var string Reverse charge tax ID */
-    public string $reverse_charge_tax_id;
+     private string $reverse_charge_tax_id;
 
-    /** @var string Reverse charge tax name (🇮🇳 only) */
-    public string $reverse_charge_tax_name;
+    /** @var string Reverse charge tax name (IN only) */
+     private string $reverse_charge_tax_name;
 
-    /** @var float Reverse charge tax percentage (🇮🇳 only) */
-    public float $reverse_charge_tax_percentage;
+    /** @var float Reverse charge tax percentage (IN only) */
+     private float $reverse_charge_tax_percentage;
 
-    /** @var int Reverse charge tax amount (🇮🇳 only) */
-    public int $reverse_charge_tax_amount;
+    /** @var int Reverse charge tax amount (IN only) */
+     private int $reverse_charge_tax_amount;
 
     /** @var float Tax amount */
-    public float $tax_amount;
+     private float $tax_amount;
 
     /** @var bool Is itemized expense */
-    public bool $is_itemized_expense;
+     private bool $is_itemized_expense;
 
-    /** @var string Pre-GST applicability (🇮🇳 only) */
-    public string $is_pre_gst;
+    /** @var string Pre-GST applicability (IN only) */
+     private string $is_pre_gst;
 
     /** @var string Trip ID */
-    public string $trip_id;
+     private string $trip_id;
 
     /** @var string Trip number */
-    public string $trip_number;
+     private string $trip_number;
 
-    /** @var float Reverse charge VAT total (🇮🇳 only) */
-    public float $reverse_charge_vat_total;
+    /** @var float Reverse charge VAT total (IN only) */
+     private float $reverse_charge_vat_total;
 
     /** @var float Acquisition VAT total */
-    public float $acquisition_vat_total;
+     private float $acquisition_vat_total;
 
     /** @var array Acquisition VAT summary */
-    public array $acquisition_vat_summary;
+     private array $acquisition_vat_summary;
 
     /** @var array Reverse charge VAT summary */
-    public array $reverse_charge_vat_summary;
+     private array $reverse_charge_vat_summary;
 
-    /** @var array Taxes (🇲🇽 only) */
-    public array $taxes;
+    /** @var array Taxes (MX only) */
+     private array $taxes;
 
     /** @var string Expense item ID */
-    public string $expense_item_id;
+     private string $expense_item_id;
 
     /** @var string Expense account ID */
-    public string $account_id;
+     private string $account_id;
 
     /** @var string Account name */
-    public string $account_name;
+     private string $account_name;
 
     /** @var string Date of the expense */
-    public string $date;
+     private string $date;
 
     /** @var string Tax ID */
-    public string $tax_id;
+     private string $tax_id;
 
     /** @var string Tax name */
-    public string $tax_name;
+     private string $tax_name;
 
     /** @var float Tax percentage */
-    public float $tax_percentage;
+     private float $tax_percentage;
 
     /** @var string Currency ID */
-    public string $currency_id;
+     private string $currency_id;
 
     /** @var string Currency code */
-    public string $currency_code;
+     private string $currency_code;
 
     /** @var float Exchange rate */
-    public float $exchange_rate;
+     private float $exchange_rate;
 
     /** @var float Subtotal */
-    public float $sub_total;
+     private float $sub_total;
 
     /** @var float Total */
-    public float $total;
+     private float $total;
 
     /** @var float Base currency total */
-    public float $bcy_total;
+     private float $bcy_total;
 
     /** @var float Amount of the expense */
-    public float $amount;
+     private float $amount;
 
     /** @var bool Is inclusive tax */
-    public bool $is_inclusive_tax;
+     private bool $is_inclusive_tax;
 
     /** @var string Reference number */
-    public string $reference_number;
+     private string $reference_number;
 
     /** @var string Description of the expense */
-    public string $description;
+     private string $description;
 
     /** @var bool Is billable */
-    public bool $is_billable;
+     private bool $is_billable;
 
     /** @var bool Is personal */
-    public bool $is_personal;
+     private bool $is_personal;
 
     /** @var string Customer ID */
-    public string $customer_id;
+     private string $customer_id;
 
     /** @var string Customer name */
-    public string $customer_name;
+     private string $customer_name;
 
     /** @var string Expense receipt name */
-    public string $expense_receipt_name;
+     private string $expense_receipt_name;
 
     /** @var string Expense receipt type */
-    public string $expense_receipt_type;
+     private string $expense_receipt_type;
 
     /** @var string Last modified time */
-    public string $last_modified_time;
+     private string $last_modified_time;
 
     /** @var string Expense status */
-    public string $status;
+     private string $status;
 
     /** @var string Invoice ID */
-    public string $invoice_id;
+     private string $invoice_id;
 
     /** @var string Invoice number */
-    public string $invoice_number;
+     private string $invoice_number;
 
     /** @var string Project ID */
-    public string $project_id;
+     private string $project_id;
 
     /** @var string Project name */
-    public string $project_name;
+     private string $project_name;
 
     /** @var float Mileage rate */
-    public float $mileage_rate;
+     private float $mileage_rate;
 
     /** @var string Mileage type */
-    public string $mileage_type;
+     private string $mileage_type;
 
     /** @var string Expense type */
-    public string $expense_type;
+     private string $expense_type;
 
     /** @var float Start reading for odometer */
-    public float $start_reading;
+     private float $start_reading;
 
     /** @var float End reading for odometer */
-    public float $end_reading;
+     private float $end_reading;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->expense_id = $data['expense_id'] ?? '';
         $this->transaction_id = $data['transaction_id'] ?? '';
         $this->transaction_type = $data['transaction_type'] ?? '';
@@ -254,5 +262,18 @@ class ExpenseDto
         $this->expense_type = $data['expense_type'] ?? '';
         $this->start_reading = $data['start_reading'] ?? 0.0;
         $this->end_reading = $data['end_reading'] ?? 0.0;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }

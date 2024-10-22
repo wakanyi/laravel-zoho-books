@@ -3,115 +3,123 @@
 namespace Sumer5020\ZohoBooks\DTOs;
 
 /**
- * Class CreditNoteDTO
+ * Class CreditNoteDto
  * Data Transfer Object for a Credit Note.
  */
 class CreditNoteDto
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string Unique ID of the credit note */
-    public string $creditnote_id;
+     private string $creditnote_id;
 
     /** @var string Unique credit note number (starts with CN) */
-    public string $creditnote_number;
+     private string $creditnote_number;
 
     /** @var string Date of the credit note in yyyy-mm-dd format */
-    public string $date;
+     private string $date;
 
-    /** @var bool Applicable for transactions before July 1, 2017 (🇮🇳 only) */
-    public bool $is_pre_gst;
+    /** @var bool Applicable for transactions before July 1, 2017 (IN only) */
+     private bool $is_pre_gst;
 
-    /** @var string Place of supply (🇮🇳, GCC only) */
-    public string $place_of_supply;
+    /** @var string Place of supply (IN, GCC only) */
+     private string $place_of_supply;
 
-    /** @var string VAT treatment (🇬🇧 only) */
-    public string $vat_treatment;
+    /** @var string VAT treatment (GB only) */
+     private string $vat_treatment;
 
     /** @var string VAT registration number */
-    public string $vat_reg_no;
+     private string $vat_reg_no;
 
-    /** @var string 15 digit GST identification number (🇮🇳 only) */
-    public string $gst_no;
+    /** @var string 15 digit GST identification number (IN only) */
+     private string $gst_no;
 
-    /** @var string CFDI usage (🇲🇽 only) */
-    public string $cfdi_usage;
+    /** @var string CFDI usage (MX only) */
+     private string $cfdi_usage;
 
-    /** @var string CFDI reference type (🇲🇽 only) */
-    public string $cfdi_reference_type;
+    /** @var string CFDI reference type (MX only) */
+     private string $cfdi_reference_type;
 
-    /** @var string GST treatment (🇮🇳 only) */
-    public string $gst_treatment;
+    /** @var string GST treatment (IN only) */
+     private string $gst_treatment;
 
-    /** @var string Tax treatment (GCC, 🇲🇽, 🇰🇪, 🇿🇦 only) */
-    public string $tax_treatment;
+    /** @var string Tax treatment (GCC, MX, KE, ZA only) */
+     private string $tax_treatment;
 
-    /** @var bool Reverse charge applied (🇿🇦 only) */
-    public bool $is_reverse_charge_applied;
+    /** @var bool Reverse charge applied (ZA only) */
+     private bool $is_reverse_charge_applied;
 
     /** @var string Status of the credit note */
-    public string $status;
+     private string $status;
 
     /** @var string Customer ID */
-    public string $customer_id;
+     private string $customer_id;
 
     /** @var string Customer name */
-    public string $customer_name;
+     private string $customer_name;
 
     /** @var array Custom fields */
-    public array $custom_fields;
+     private array $custom_fields;
 
     /** @var string Reference number */
-    public string $reference_number;
+     private string $reference_number;
 
     /** @var string Customer's email address */
-    public string $email;
+     private string $email;
 
     /** @var float Total credits raised */
-    public float $total;
+     private float $total;
 
     /** @var float Unapplied credits balance */
-    public float $balance;
+     private float $balance;
 
     /** @var array Line items */
-    public array $line_items;
+     private array $line_items;
 
     /** @var array List of invoices related to the credit note */
-    public array $invoices;
+     private array $invoices;
 
     /** @var array Taxes associated with the credit note */
-    public array $taxes;
+     private array $taxes;
 
     /** @var string Customer's currency code */
-    public string $currency_code;
+     private string $currency_code;
 
     /** @var string Customer's currency symbol */
-    public string $currency_symbol;
+     private string $currency_symbol;
 
     /** @var object Billing address */
-    public object $billing_address;
+     private object $billing_address;
 
     /** @var object Shipping address */
-    public object $shipping_address;
+     private object $shipping_address;
 
     /** @var string Time when the credit note was created */
-    public string $created_time;
+     private string $created_time;
 
     /** @var string Last updated time of the credit note */
-    public string $updated_time;
+     private string $updated_time;
 
     /** @var string Template ID */
-    public string $template_id;
+     private string $template_id;
 
     /** @var string Template name */
-    public string $template_name;
+     private string $template_name;
 
     /** @var string Notes for the credit note */
-    public string $notes;
+     private string $notes;
 
     /** @var string Terms & conditions */
-    public string $terms;
+     private string $terms;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->creditnote_id = $data['creditnote_id'] ?? '';
         $this->creditnote_number = $data['creditnote_number'] ?? '';
         $this->date = $data['date'] ?? '';
@@ -146,5 +154,18 @@ class CreditNoteDto
         $this->template_name = $data['template_name'] ?? '';
         $this->notes = $data['notes'] ?? '';
         $this->terms = $data['terms'] ?? '';
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }

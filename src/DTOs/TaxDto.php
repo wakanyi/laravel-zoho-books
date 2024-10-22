@@ -3,57 +3,60 @@
 namespace Sumer5020\ZohoBooks\DTOs;
 
 /**
- * Class TaxDTO
+ * Class TaxDto
  * Data Transfer Object for a Tax.
  */
 class TaxDto
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string ID of the Tax */
-    public string $tax_id;
+     private string $tax_id;
 
     /** @var string Name of the Tax */
-    public string $tax_name;
+     private string $tax_name;
 
     /** @var float Number of Percentage Taxable */
-    public float $tax_percentage;
+     private float $tax_percentage;
 
     /** @var string Type to determine whether it is a simple or compound tax (Allowed Values: tax and compound_tax) */
-    public string $tax_type;
+     private string $tax_type;
 
     /** @var string Type of Tax Factor (Allowed values: rate, share for Mexico only) */
-    public string $tax_factor;
+     private string $tax_factor;
 
     /** @var string Input Tax ID (for Mexico only) */
-    public string $tds_payable_account_id;
+     private string $tds_payable_account_id;
 
     /** @var string ID of the tax authority (for USA and Mexico only) */
-    public string $tax_authority_id;
+     private string $tax_authority_id;
 
     /** @var string Name of the Tax Authority */
-    public string $tax_authority_name;
+     private string $tax_authority_name;
 
     /** @var bool Check if Tax is Value Added */
-    public bool $is_value_added;
+     private bool $is_value_added;
 
     /** @var string Type of Tax for specific regions (Allowed Values for India: igst, cgst, sgst, nil, cess; for Mexico: isr, iva, ieps; for South Africa: soa_less_than_28d, soa_more_than_28d, ciu_prev_tax_supply, ciu_prev_nontax_supply, export_of_shg) */
-    public string $tax_specific_type;
+     private string $tax_specific_type;
 
     /** @var string Country to which the tax belongs (for UK, Europe, and other regions) */
-    public string $country;
+     private string $country;
 
     /** @var string Two letter country code for the EU country to which the tax belongs */
-    public string $country_code;
+     private string $country_code;
 
     /** @var int Account ID in which Purchase Tax will be Computed (for Australia and Canada only) */
-    public int $purchase_tax_expense_account_id;
+     private int $purchase_tax_expense_account_id;
 
     /**
-     * TaxDto constructor.
-     *
-     * @param array $data Data for the Tax.
+     * @param array $data
      */
-    public function __construct(array $data)
+     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->tax_id = $data['tax_id'] ?? '';
         $this->tax_name = $data['tax_name'] ?? '';
         $this->tax_percentage = $data['tax_percentage'] ?? 0.0;
@@ -67,5 +70,18 @@ class TaxDto
         $this->country = $data['country'] ?? '';
         $this->country_code = $data['country_code'] ?? '';
         $this->purchase_tax_expense_account_id = $data['purchase_tax_expense_account_id'] ?? 0;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }

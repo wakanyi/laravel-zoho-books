@@ -3,163 +3,171 @@
 namespace Sumer5020\ZohoBooks\DTOs;
 
 /**
- * Class BankTransactionDTO
+ * Class BankTransactionDto
  * Data Transfer Object for a Bank Transaction.
  */
 class BankTransactionDTO
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string ID of the Transaction */
-    public string $transaction_id;
+     private string $transaction_id;
 
     /** @var string The account ID from which money will be transferred */
-    public string $from_account_id;
+     private string $from_account_id;
 
     /** @var string The account Name from which money will be transferred */
-    public string $from_account_name;
+     private string $from_account_name;
 
     /** @var string ID of the account to which the money gets transferred */
-    public string $to_account_id;
+     private string $to_account_id;
 
     /** @var string The account Name to which the money gets transferred */
-    public string $to_account_name;
+     private string $to_account_name;
 
     /** @var string Type of the transaction */
-    public string $transaction_type;
+     private string $transaction_type;
 
     /** @var string The currency ID involved in the transaction */
-    public string $currency_id;
+     private string $currency_id;
 
     /** @var string Code of the currency involved in the transaction */
-    public string $currency_code;
+     private string $currency_code;
 
     /** @var string Mode of payment for the transaction */
-    public string $payment_mode;
+     private string $payment_mode;
 
     /** @var int The foreign currency exchange rate value */
-    public int $exchange_rate;
+     private int $exchange_rate;
 
     /** @var string Transaction date */
-    public string $date;
+     private string $date;
 
     /** @var string ID of the customer or vendor */
-    public string $customer_id;
+     private string $customer_id;
 
     /** @var string Name of the Customer */
-    public string $customer_name;
+     private string $customer_name;
 
     /** @var string ID of the Vendor */
-    public string $vendor_id;
+     private string $vendor_id;
 
     /** @var string Name of the Vendor */
-    public string $vendor_name;
+     private string $vendor_name;
 
     /** @var string Reference Number of the transaction */
-    public string $reference_number;
+     private string $reference_number;
 
     /** @var string A brief description about the transaction */
-    public string $description;
+     private string $description;
 
     /** @var float Bank Charges applied to the transaction */
-    public float $bank_charges;
+     private float $bank_charges;
 
     /** @var string ID of the tax or tax group applied */
-    public string $tax_id;
+     private string $tax_id;
 
     /** @var array List of files to be attached to a particular transaction */
-    public array $documents;
+     private array $documents;
 
     /** @var bool Check if transaction is tax Inclusive */
-    public bool $is_inclusive_tax;
+     private bool $is_inclusive_tax;
 
     /** @var string Name of the Tax */
-    public string $tax_name;
+     private string $tax_name;
 
     /** @var float Percentage of the Tax */
-    public float $tax_percentage;
+     private float $tax_percentage;
 
     /** @var float Amount of Tax */
-    public float $tax_amount;
+     private float $tax_amount;
 
     /** @var int Sub Total of the transaction */
-    public int $sub_total;
+     private int $sub_total;
 
     /** @var string ID of the Tax Authority */
-    public string $tax_authority_id;
+     private string $tax_authority_id;
 
     /** @var string Name of the Tax Authority */
-    public string $tax_authority_name;
+     private string $tax_authority_name;
 
     /** @var string ID of the Tax Exemption */
-    public string $tax_exemption_id;
+     private string $tax_exemption_id;
 
     /** @var string Code of the Tax Exemption */
-    public string $tax_exemption_code;
+     private string $tax_exemption_code;
 
     /** @var int Total of the transaction */
-    public int $total;
+     private int $total;
 
     /** @var int Total in Base Currency of the Organisation */
-    public int $bcy_total;
+     private int $bcy_total;
 
     /** @var float Amount of the transaction */
-    public float $amount;
+     private float $amount;
 
     /** @var string VAT treatment for the bank transaction */
-    public string $vat_treatment;
+     private string $vat_treatment;
 
     /** @var string VAT treatment for the bank transaction */
-    public string $tax_treatment;
+     private string $tax_treatment;
 
     /** @var string Type of the transaction */
-    public string $product_type;
+     private string $product_type;
 
     /** @var string (Optional) ID of the tax applied for VAT Acquistion */
-    public string $acquisition_vat_id;
+     private string $acquisition_vat_id;
 
     /** @var string Name of the VAT Acquisition */
-    public string $acquisition_vat_name;
+     private string $acquisition_vat_name;
 
     /** @var string Percentage of the VAT Acquisition */
-    public string $acquisition_vat_percentage;
+     private string $acquisition_vat_percentage;
 
     /** @var string Amount of the VAT Acquisition */
-    public string $acquisition_vat_amount;
+     private string $acquisition_vat_amount;
 
     /** @var string (Optional) ID of the tax applied for Reverse Charge VAT */
-    public string $reverse_charge_vat_id;
+     private string $reverse_charge_vat_id;
 
     /** @var string Name of the Reverse Charge */
-    public string $reverse_charge_vat_name;
+     private string $reverse_charge_vat_name;
 
     /** @var string Percentage of the Reverse Charge */
-    public string $reverse_charge_vat_percentage;
+     private string $reverse_charge_vat_percentage;
 
     /** @var string Amount of the Reverse Charge */
-    public string $reverse_charge_vat_amount;
+     private string $reverse_charge_vat_amount;
 
     /** @var string Enter reverse charge tax ID */
-    public string $reverse_charge_tax_id;
+     private string $reverse_charge_tax_id;
 
     /** @var string ID of the VAT Return the Vendor Credit is filed in */
-    public string $filed_in_vat_return_id;
+     private string $filed_in_vat_return_id;
 
     /** @var string Name of the VAT Return the Vendor Credit is filed in */
-    public string $filed_in_vat_return_name;
+     private string $filed_in_vat_return_name;
 
     /** @var string Type of the VAT Return the Vendor Credit is filed in */
-    public string $filed_in_vat_return_type;
+     private string $filed_in_vat_return_type;
 
     /** @var array Imported transactions */
-    public array $imported_transactions;
+     private array $imported_transactions;
 
     /** @var array Tags */
-    public array $tags;
+     private array $tags;
 
     /** @var array Line items */
-    public array $line_items;
+     private array $line_items;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->transaction_id = $data['transaction_id'] ?? '';
         $this->from_account_id = $data['from_account_id'] ?? '';
         $this->from_account_name = $data['from_account_name'] ?? '';
@@ -210,5 +218,18 @@ class BankTransactionDTO
         $this->imported_transactions = $data['imported_transactions'] ?? [];
         $this->tags = $data['tags'] ?? [];
         $this->line_items = $data['line_items'] ?? [];
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }

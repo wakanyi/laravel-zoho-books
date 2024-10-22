@@ -8,89 +8,97 @@ namespace Sumer5020\ZohoBooks\DTOs;
  */
 class BankAccountDto
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string ID of the Bank/Credit Card account */
-    public string $account_id;
+     private string $account_id;
 
     /** @var string Name of the account */
-    public string $account_name;
+     private string $account_name;
 
     /** @var string Code of the Account */
-    public string $account_code;
+     private string $account_code;
 
     /** @var string ID of the Currency associated with the Account */
-    public string $currency_id;
+     private string $currency_id;
 
     /** @var string Code of the currency associated with the Bank Account */
-    public string $currency_code;
+     private string $currency_code;
 
     /** @var string Symbol of the Currency associated with the Account */
-    public string $currency_symbol;
+     private string $currency_symbol;
 
     /** @var int Precision of the Price Values */
-    public int $price_precision;
+     private int $price_precision;
 
     /** @var string Type of the account */
-    public string $account_type;
+     private string $account_type;
 
     /** @var string Number associated with the Bank Account */
-    public string $account_number;
+     private string $account_number;
 
     /** @var int Number of uncategorized transactions */
-    public int $uncategorized_transactions;
+     private int $uncategorized_transactions;
 
     /** @var int Number of unprinted checks */
-    public int $total_unprinted_checks;
+     private int $total_unprinted_checks;
 
     /** @var bool Check if Account is Active */
-    public bool $is_active;
+     private bool $is_active;
 
     /** @var bool Check if feeds are subscribed */
-    public bool $is_feeds_subscribed;
+     private bool $is_feeds_subscribed;
 
     /** @var bool Check if feeds are active */
-    public bool $is_feeds_active;
+     private bool $is_feeds_active;
 
     /** @var float Balance present in the account */
-    public float $balance;
+     private float $balance;
 
     /** @var int Balance present in the Bank */
-    public int $bank_balance;
+     private int $bank_balance;
 
     /** @var float Balance in Base Currency */
-    public float $bcy_balance;
+     private float $bcy_balance;
 
     /** @var string Name of the Bank */
-    public string $bank_name;
+     private string $bank_name;
 
     /** @var string Routing Number of the Account */
-    public string $routing_number;
+     private string $routing_number;
 
     /** @var bool Check if the Account is Primary Account in Zoho Books */
-    public bool $is_primary_account;
+     private bool $is_primary_account;
 
     /** @var bool Check if the Account is Paypal Account */
-    public bool $is_paypal_account;
+     private bool $is_paypal_account;
 
     /** @var string Description of the Account */
-    public string $description;
+     private string $description;
 
     /** @var string Refresh Status Code of the Bank */
-    public string $refresh_status_code;
+     private string $refresh_status_code;
 
     /** @var string Last Refreshed Date of the Feeds */
-    public string $feeds_last_refresh_date;
+     private string $feeds_last_refresh_date;
 
     /** @var string Service ID of the Account */
-    public string $service_id;
+     private string $service_id;
 
     /** @var bool Check if the account is a system account */
-    public bool $is_system_account;
+     private bool $is_system_account;
 
     /** @var bool Check if warning should be shown for refreshing Bank Feeds */
-    public bool $is_show_warning_for_feeds_refresh;
+     private bool $is_show_warning_for_feeds_refresh;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->account_id = $data['account_id'] ?? '';
         $this->account_name = $data['account_name'] ?? '';
         $this->account_code = $data['account_code'] ?? '';
@@ -118,5 +126,18 @@ class BankAccountDto
         $this->service_id = $data['service_id'] ?? '';
         $this->is_system_account = $data['is_system_account'] ?? false;
         $this->is_show_warning_for_feeds_refresh = $data['is_show_warning_for_feeds_refresh'] ?? false;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }

@@ -3,160 +3,168 @@
 namespace Sumer5020\ZohoBooks\DTOs;
 
 /**
- * Class RetainerInvoiceDTO
+ * Class RetainerInvoiceDto
  * Data Transfer Object for a Retainer Invoice.
  */
 class RetainerInvoiceDto
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string ID of the retainer invoice */
-    public string $retainerinvoice_id;
+     private string $retainerinvoice_id;
 
     /** @var string Number of the retainer invoice */
-    public string $retainerinvoice_number;
+     private string $retainerinvoice_number;
 
     /** @var string Date of creation */
-    public string $date;
+     private string $date;
 
     /** @var string Status of the retainer invoice */
-    public string $status;
+     private string $status;
 
     /** @var string Pre-GST applicability */
-    public string $is_pre_gst;
+     private string $is_pre_gst;
 
-    /** @var string Place of supply (🇮🇳 only) */
-    public string $place_of_supply;
+    /** @var string Place of supply (IN only) */
+     private string $place_of_supply;
 
     /** @var string Project ID */
-    public string $project_id;
+     private string $project_id;
 
     /** @var string Project name */
-    public string $project_name;
+     private string $project_name;
 
     /** @var string Last payment date */
-    public string $last_payment_date;
+     private string $last_payment_date;
 
     /** @var string Reference number */
-    public string $reference_number;
+     private string $reference_number;
 
     /** @var string Customer ID */
-    public string $customer_id;
+     private string $customer_id;
 
     /** @var string Customer name */
-    public string $customer_name;
+     private string $customer_name;
 
     /** @var array Contact persons */
-    public array $contact_persons;
+     private array $contact_persons;
 
     /** @var string Currency ID */
-    public string $currency_id;
+     private string $currency_id;
 
     /** @var string Currency code */
-    public string $currency_code;
+     private string $currency_code;
 
     /** @var string Currency symbol */
-    public string $currency_symbol;
+     private string $currency_symbol;
 
     /** @var float Exchange rate */
-    public float $exchange_rate;
+     private float $exchange_rate;
 
     /** @var bool Is viewed by client */
-    public bool $is_viewed_by_client;
+     private bool $is_viewed_by_client;
 
     /** @var bool Client viewed time */
-    public bool $client_viewed_time;
+     private bool $client_viewed_time;
 
     /** @var bool Is inclusive tax */
-    public bool $is_inclusive_tax;
+     private bool $is_inclusive_tax;
 
     /** @var array Line items */
-    public array $line_items;
+     private array $line_items;
 
     /** @var float Subtotal */
-    public float $sub_total;
+     private float $sub_total;
 
     /** @var string Total amount to be paid */
-    public string $total;
+     private string $total;
 
     /** @var array Taxes levied */
-    public array $taxes;
+     private array $taxes;
 
     /** @var float Payment made */
-    public float $payment_made;
+     private float $payment_made;
 
     /** @var float Payment drawn */
-    public float $payment_drawn;
+     private float $payment_drawn;
 
     /** @var string Unpaid balance */
-    public string $balance;
+     private string $balance;
 
     /** @var bool Allow partial payments */
-    public bool $allow_partial_payments;
+     private bool $allow_partial_payments;
 
     /** @var int Price precision */
-    public int $price_precision;
+     private int $price_precision;
 
     /** @var object Payment options */
-    public object $payment_options;
+     private object $payment_options;
 
     /** @var string Is emailed */
-    public string $is_emailed;
+     private string $is_emailed;
 
     /** @var array Documents attached */
-    public array $documents;
+     private array $documents;
 
     /** @var object Billing address */
-    public object $billing_address;
+     private object $billing_address;
 
     /** @var object Shipping address */
-    public object $shipping_address;
+     private object $shipping_address;
 
     /** @var string Notes */
-    public string $notes;
+     private string $notes;
 
     /** @var string Terms */
-    public string $terms;
+     private string $terms;
 
     /** @var array Custom fields */
-    public array $custom_fields;
+     private array $custom_fields;
 
     /** @var string Template ID */
-    public string $template_id;
+     private string $template_id;
 
     /** @var string Template name */
-    public string $template_name;
+     private string $template_name;
 
     /** @var string Page width */
-    public string $page_width;
+     private string $page_width;
 
     /** @var string Page height */
-    public string $page_height;
+     private string $page_height;
 
     /** @var string Orientation */
-    public string $orientation;
+     private string $orientation;
 
     /** @var string Template type */
-    public string $template_type;
+     private string $template_type;
 
     /** @var string Created time */
-    public string $created_time;
+     private string $created_time;
 
     /** @var string Last modified time */
-    public string $last_modified_time;
+     private string $last_modified_time;
 
     /** @var string Created by ID */
-    public string $created_by_id;
+     private string $created_by_id;
 
     /** @var string Attachment name */
-    public string $attachment_name;
+     private string $attachment_name;
 
     /** @var bool Can send in mail */
-    public bool $can_send_in_mail;
+     private bool $can_send_in_mail;
 
     /** @var string Invoice URL */
-    public string $invoice_url;
+     private string $invoice_url;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->retainerinvoice_id = $data['retainerinvoice_id'] ?? '';
         $this->retainerinvoice_number = $data['retainerinvoice_number'] ?? '';
         $this->date = $data['date'] ?? '';
@@ -206,5 +214,18 @@ class RetainerInvoiceDto
         $this->attachment_name = $data['attachment_name'] ?? '';
         $this->can_send_in_mail = $data['can_send_in_mail'] ?? false;
         $this->invoice_url = $data['invoice_url'] ?? '';
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }

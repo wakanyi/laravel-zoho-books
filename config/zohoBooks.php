@@ -77,5 +77,5 @@ return [
   |
   */
 
-  'response_format' => env('ZOHO_BOOKS_RESPONSE_FORMAT', ResponseFormatEnum::JSON),
+  'response_format' => env('ZOHO_BOOKS_RESPONSE_FORMAT', ResponseFormatEnum::JSON->format()),
 ];

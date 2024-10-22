@@ -2,10 +2,14 @@
 
 namespace Sumer5020\ZohoBooks\Contracts;
 
+use Sumer5020\ZohoBooks\DTOs\ContactDto;
+
 interface ContactInterface
 {
-    //Create a Contact
-    //Update a contact using a custom field's unique value
+
+    public function create(string $accessToken, string $organization_id, ContactDto $contactDto): array;
+
+    public function update(string $accessToken, string $organization_id, ContactDto $contactDto): array;
     //List Contacts
     //Update a Contact
     //Get Contact

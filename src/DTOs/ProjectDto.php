@@ -3,94 +3,102 @@
 namespace Sumer5020\ZohoBooks\DTOs;
 
 /**
- * Class ProjectDTO
+ * Class ProjectDto
  * Data Transfer Object for a Project.
  */
 class ProjectDto
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string ID of the project */
-    public string $project_id;
+     private string $project_id;
 
     /** @var string Name of the project. Max-length [100] */
-    public string $project_name;
+     private string $project_name;
 
     /** @var string Search projects by customer id */
-    public string $customer_id;
+     private string $customer_id;
 
     /** @var string Name of the customer */
-    public string $customer_name;
+     private string $customer_name;
 
     /** @var string Currency code associated with the project */
-    public string $currency_code;
+     private string $currency_code;
 
     /** @var string Description of the project */
-    public string $description;
+     private string $description;
 
     /** @var string Status of the project */
-    public string $status;
+     private string $status;
 
     /** @var string Billing type. Allowed values: fixed_cost_for_project, based_on_project_hours, based_on_staff_hours, based_on_task_hours */
-    public string $billing_type;
+     private string $billing_type;
 
     /** @var float Rate associated with the project */
-    public float $rate;
+     private float $rate;
 
     /** @var string Type of budget for the project */
-    public string $budget_type;
+     private string $budget_type;
 
     /** @var string Total hours allocated for the project */
-    public string $total_hours;
+     private string $total_hours;
 
     /** @var float Total amount for the project */
-    public float $total_amount;
+     private float $total_amount;
 
     /** @var string Billed hours for the project */
-    public string $billed_hours;
+     private string $billed_hours;
 
     /** @var float Billed amount for the project */
-    public float $billed_amount;
+     private float $billed_amount;
 
     /** @var string Unbilled hours for the project */
-    public string $un_billed_hours;
+     private string $un_billed_hours;
 
     /** @var float Unbilled amount for the project */
-    public float $un_billed_amount;
+     private float $un_billed_amount;
 
     /** @var string Billable hours for the project */
-    public string $billable_hours;
+     private string $billable_hours;
 
     /** @var float Billable amount for the project */
-    public float $billable_amount;
+     private float $billable_amount;
 
     /** @var string Non-billable hours for the project */
-    public string $non_billable_hours;
+     private string $non_billable_hours;
 
     /** @var float Non-billable amount for the project */
-    public float $non_billable_amount;
+     private float $non_billable_amount;
 
     /** @var float Budgeted cost to complete this project */
-    public float $cost_budget_amount;
+     private float $cost_budget_amount;
 
     /** @var bool Check if recurrence is associated with the project */
-    public bool $is_recurrence_associated;
+     private bool $is_recurrence_associated;
 
     /** @var array Recurring invoices associated with the project */
-    public array $recurring_invoices;
+     private array $recurring_invoices;
 
     /** @var string Created time of the project */
-    public string $created_time;
+     private string $created_time;
 
     /** @var bool Show in dashboard */
-    public bool $show_in_dashboard;
+     private bool $show_in_dashboard;
 
     /** @var array Tasks associated with the project */
-    public array $tasks;
+     private array $tasks;
 
     /** @var array Users associated with the project */
-    public array $users;
+     private array $users;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->project_id = $data['project_id'] ?? '';
         $this->project_name = $data['project_name'] ?? '';
         $this->customer_id = $data['customer_id'] ?? '';
@@ -118,5 +126,18 @@ class ProjectDto
         $this->show_in_dashboard = $data['show_in_dashboard'] ?? false;
         $this->tasks = $data['tasks'] ?? [];
         $this->users = $data['users'] ?? [];
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }
