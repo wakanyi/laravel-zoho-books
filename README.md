@@ -7,6 +7,8 @@
 ![Packagist Downloads](https://img.shields.io/packagist/dt/sumer5020/laravel-zoho-books?color=darkslategrey&label=Downloads)
 ![Stand With Palestine 🇵🇸](https://raw.githubusercontent.com/TheBSD/StandWithPalestine/main/badges/StandWithPalestine.svg)
 
+[English](README.md) | [العربية](README.ar.md)
+
 </div>
 
 # Laravel Zoho Books
