@@ -173,6 +173,6 @@ $token = ZohoBooksFacade::authentications()->refreshAccessToken($refresh_token);
 
 ## الرخصة
 
-رخصة MIT. يرجى الاطلاع على ملف MIT license لمزيد من المعلومات.
+رخصة MIT. يرجى الاطلاع على ملف [MIT license](LICENSE.md) لمزيد من المعلومات.
 
 </div>
