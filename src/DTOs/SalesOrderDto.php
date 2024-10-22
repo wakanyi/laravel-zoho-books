@@ -8,191 +8,199 @@ namespace Sumer5020\ZohoBooks\DTOs;
  */
 class SalesOrderDto
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string ID of the Sales Order */
-    public string $salesorder_id;
+     private string $salesorder_id;
 
     /** @var array Documents related to the Sales Order */
-    public array $documents;
+     private array $documents;
 
     /** @var bool Applicable for transactions that fall before July 1, 2017 (India only) */
-    public bool $is_pre_gst;
+     private bool $is_pre_gst;
 
     /** @var string GST identification number of the customer (India only) */
-    public string $gst_no;
+     private string $gst_no;
 
     /** @var string GST treatment (India only) */
-    public string $gst_treatment;
+     private string $gst_treatment;
 
     /** @var string Place where goods/services are supplied (India, GCC only) */
-    public string $place_of_supply;
+     private string $place_of_supply;
 
     /** @var string VAT treatment (UK only) */
-    public string $vat_treatment;
+     private string $vat_treatment;
 
     /** @var string VAT treatment for the sales order (GCC, Mexico, Kenya, South Africa only) */
-    public string $tax_treatment;
+     private string $tax_treatment;
 
     /** @var string ZCRM potential ID */
-    public string $zcrm_potential_id;
+     private string $zcrm_potential_id;
 
     /** @var string ZCRM potential name */
-    public string $zcrm_potential_name;
+     private string $zcrm_potential_name;
 
     /** @var string Sales order number (mandatory if auto number generation is disabled) */
-    public string $salesorder_number;
+     private string $salesorder_number;
 
     /** @var string Date the sales order is created */
-    public string $date;
+     private string $date;
 
     /** @var string Status of the Sales Order */
-    public string $status;
+     private string $status;
 
     /** @var string Shipment date of the sales order */
-    public string $shipment_date;
+     private string $shipment_date;
 
     /** @var string Reference number of the Sales Order */
-    public string $reference_number;
+     private string $reference_number;
 
     /** @var string ID of the customer */
-    public string $customer_id;
+     private string $customer_id;
 
     /** @var string Name of the customer */
-    public string $customer_name;
+     private string $customer_name;
 
     /** @var array Contact persons for the Sales Order */
-    public array $contact_persons;
+     private array $contact_persons;
 
     /** @var string Currency ID */
-    public string $currency_id;
+     private string $currency_id;
 
     /** @var string Currency code */
-    public string $currency_code;
+     private string $currency_code;
 
     /** @var string Currency symbol */
-    public string $currency_symbol;
+     private string $currency_symbol;
 
     /** @var float Exchange rate of the currency */
-    public float $exchange_rate;
+     private float $exchange_rate;
 
     /** @var float Discount amount */
-    public float $discount_amount;
+     private float $discount_amount;
 
     /** @var string Discount applied to the Sales Order */
-    public string $discount;
+     private string $discount;
 
     /** @var int Discount applied on amount */
-    public int $discount_applied_on_amount;
+     private int $discount_applied_on_amount;
 
     /** @var bool Whether the discount is applied before tax */
-    public bool $is_discount_before_tax;
+     private bool $is_discount_before_tax;
 
     /** @var string How the discount is specified (entity_level or item_level) */
-    public string $discount_type;
+     private string $discount_type;
 
     /** @var string ID of the estimate from which the Sales Order is created */
-    public string $estimate_id;
+     private string $estimate_id;
 
     /** @var string Delivery method */
-    public string $delivery_method;
+     private string $delivery_method;
 
     /** @var string ID of the delivery method */
-    public string $delivery_method_id;
+     private string $delivery_method_id;
 
     /** @var bool Whether tax is inclusive */
-    public bool $is_inclusive_tax;
+     private bool $is_inclusive_tax;
 
     /** @var array Line items of the Sales Order */
-    public array $line_items;
+     private array $line_items;
 
     /** @var float Shipping charge */
-    public float $shipping_charge;
+     private float $shipping_charge;
 
     /** @var float Adjustment amount */
-    public float $adjustment;
+     private float $adjustment;
 
     /** @var string Description of the adjustment */
-    public string $adjustment_description;
+     private string $adjustment_description;
 
     /** @var float Subtotal of the Sales Order */
-    public float $sub_total;
+     private float $sub_total;
 
     /** @var float Total tax amount */
-    public float $tax_total;
+     private float $tax_total;
 
     /** @var float Total amount of the Sales Order */
-    public float $total;
+     private float $total;
 
     /** @var array Taxes applied */
-    public array $taxes;
+     private array $taxes;
 
     /** @var int Price precision */
-    public int $price_precision;
+     private int $price_precision;
 
     /** @var bool Whether the Sales Order is emailed */
-    public bool $is_emailed;
+     private bool $is_emailed;
 
     /** @var object Billing address */
-    public object $billing_address;
+     private object $billing_address;
 
     /** @var object Shipping address */
-    public object $shipping_address;
+     private object $shipping_address;
 
     /** @var string Notes for the Sales Order */
-    public string $notes;
+     private string $notes;
 
     /** @var string Terms for the Sales Order */
-    public string $terms;
+     private string $terms;
 
     /** @var array Custom fields */
-    public array $custom_fields;
+     private array $custom_fields;
 
     /** @var string ID of the PDF template */
-    public string $template_id;
+     private string $template_id;
 
     /** @var string Name of the PDF template */
-    public string $template_name;
+     private string $template_name;
 
     /** @var string Page width */
-    public string $page_width;
+     private string $page_width;
 
     /** @var string Page height */
-    public string $page_height;
+     private string $page_height;
 
     /** @var string Page orientation */
-    public string $orientation;
+     private string $orientation;
 
     /** @var string Type of the template */
-    public string $template_type;
+     private string $template_type;
 
     /** @var string Creation time of the Sales Order */
-    public string $created_time;
+     private string $created_time;
 
     /** @var string Last modified time of the Sales Order */
-    public string $last_modified_time;
+     private string $last_modified_time;
 
     /** @var string ID of the user who created the Sales Order */
-    public string $created_by_id;
+     private string $created_by_id;
 
     /** @var string Name of the attachment */
-    public string $attachment_name;
+     private string $attachment_name;
 
     /** @var bool Whether the file can be sent in mail */
-    public bool $can_send_in_mail;
+     private bool $can_send_in_mail;
 
     /** @var string ID of the salesperson */
-    public string $salesperson_id;
+     private string $salesperson_id;
 
     /** @var string Name of the salesperson */
-    public string $salesperson_name;
+     private string $salesperson_name;
 
     /** @var string ID of the merchant */
-    public string $merchant_id;
+     private string $merchant_id;
 
     /** @var string Name of the merchant */
-    public string $merchant_name;
+     private string $merchant_name;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->salesorder_id = $data['salesorder_id'] ?? '';
         $this->documents = $data['documents'] ?? [];
         $this->is_pre_gst = $data['is_pre_gst'] ?? false;
@@ -254,5 +262,18 @@ class SalesOrderDto
         $this->salesperson_name = $data['salesperson_name'] ?? '';
         $this->merchant_id = $data['merchant_id'] ?? '';
         $this->merchant_name = $data['merchant_name'] ?? '';
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }

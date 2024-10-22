@@ -3,6 +3,7 @@
 namespace Sumer5020\ZohoBooks;
 
 use Illuminate\Support\ServiceProvider;
+use Sumer5020\ZohoBooks\Console\Commands\ZohoBooksInit;
 
 class ZohoBooksServiceProvider extends ServiceProvider
 {
@@ -15,6 +16,7 @@ class ZohoBooksServiceProvider extends ServiceProvider
     {
         $this->publishConfig();
         $this->publishMigrations();
+        $this->registerCommands();
     }
 
     /**
@@ -88,7 +90,7 @@ class ZohoBooksServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function publishConfig(): void
+    private function publishConfig(): void
     {
         $this->publishes([
             __DIR__ . '/../config' => config_path(),
@@ -100,12 +102,26 @@ class ZohoBooksServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function publishMigrations(): void
+    private function publishMigrations(): void
     {
         $timestamp = date('Y_m_d_His', time());
         $stub = __DIR__ . '/../database/migrations/create_zoho_tokens_tables.php';
         $target = $this->app->databasePath() . '/migrations/' . $timestamp . '_create_zoho_tokens_tables.php';
 
         $this->publishes([$stub => $target], 'zohoBooks.migrations');
+    }
+
+    /**
+     * Register console commands.
+     *
+     * @return void
+     */
+    private function registerCommands(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                ZohoBooksInit::class
+            ]);
+        }
     }
 }

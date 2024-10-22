@@ -3,208 +3,216 @@
 namespace Sumer5020\ZohoBooks\DTOs;
 
 /**
- * Class PurchaseOrderDTO
+ * Class PurchaseOrderDto
  * Data Transfer Object for a Purchase Order.
  */
 class PurchaseOrderDto
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string ID of the purchase order */
-    public string $purchaseorder_id;
+     private string $purchaseorder_id;
 
     /** @var array Documents associated with the purchase order */
-    public array $documents;
+     private array $documents;
 
-    /** @var string VAT treatment (🇬🇧 only) */
-    public string $vat_treatment;
+    /** @var string VAT treatment (GB only) */
+     private string $vat_treatment;
 
-    /** @var string GST number (🇮🇳 only) */
-    public string $gst_no;
+    /** @var string GST number (IN only) */
+     private string $gst_no;
 
-    /** @var string GST treatment (🇮🇳 only) */
-    public string $gst_treatment;
+    /** @var string GST treatment (IN only) */
+     private string $gst_treatment;
 
-    /** @var string Tax treatment (GCC, 🇲🇽, 🇰🇪, 🇿🇦 only) */
-    public string $tax_treatment;
+    /** @var string Tax treatment (GCC, MX, KE, ZA only) */
+     private string $tax_treatment;
 
-    /** @var bool Is pre-GST applicable (🇮🇳 only) */
-    public bool $is_pre_gst;
+    /** @var bool Is pre-GST applicable (IN only) */
+     private bool $is_pre_gst;
 
-    /** @var string Source of supply (🇮🇳 only) */
-    public string $source_of_supply;
+    /** @var string Source of supply (IN only) */
+     private string $source_of_supply;
 
-    /** @var string Destination of supply (🇮🇳 only) */
-    public string $destination_of_supply;
+    /** @var string Destination of supply (IN only) */
+     private string $destination_of_supply;
 
     /** @var string Place of supply (GCC only) */
-    public string $place_of_supply;
+     private string $place_of_supply;
 
     /** @var string Pricebook ID */
-    public string $pricebook_id;
+     private string $pricebook_id;
 
     /** @var string Pricebook name */
-    public string $pricebook_name;
+     private string $pricebook_name;
 
-    /** @var bool Is reverse charge applied (🇮🇳 only) */
-    public bool $is_reverse_charge_applied;
+    /** @var bool Is reverse charge applied (IN only) */
+     private bool $is_reverse_charge_applied;
 
     /** @var string Purchase order number */
-    public string $purchaseorder_number;
+     private string $purchaseorder_number;
 
     /** @var string Date of purchase order creation */
-    public string $date;
+     private string $date;
 
     /** @var string Expected delivery date */
-    public string $expected_delivery_date;
+     private string $expected_delivery_date;
 
     /** @var string Discount on purchase order */
-    public string $discount;
+     private string $discount;
 
     /** @var string Discount account ID */
-    public string $discount_account_id;
+     private string $discount_account_id;
 
     /** @var bool Is discount before tax */
-    public bool $is_discount_before_tax;
+     private bool $is_discount_before_tax;
 
     /** @var string Reference number */
-    public string $reference_number;
+     private string $reference_number;
 
     /** @var string Status of the purchase order */
-    public string $status;
+     private string $status;
 
     /** @var string Vendor ID */
-    public string $vendor_id;
+     private string $vendor_id;
 
     /** @var string Vendor name */
-    public string $vendor_name;
+     private string $vendor_name;
 
     /** @var string CRM owner ID */
-    public string $crm_owner_id;
+     private string $crm_owner_id;
 
     /** @var array Contact persons */
-    public array $contact_persons;
+     private array $contact_persons;
 
     /** @var string Currency ID */
-    public string $currency_id;
+     private string $currency_id;
 
     /** @var string Currency code */
-    public string $currency_code;
+     private string $currency_code;
 
     /** @var string Currency symbol */
-    public string $currency_symbol;
+     private string $currency_symbol;
 
     /** @var float Exchange rate */
-    public float $exchange_rate;
+     private float $exchange_rate;
 
     /** @var string Delivery date */
-    public string $delivery_date;
+     private string $delivery_date;
 
     /** @var bool Is emailed */
-    public bool $is_emailed;
+     private bool $is_emailed;
 
     /** @var bool Is inclusive tax */
-    public bool $is_inclusive_tax;
+     private bool $is_inclusive_tax;
 
     /** @var array Line items */
-    public array $line_items;
+     private array $line_items;
 
     /** @var float Subtotal of the purchase order */
-    public float $sub_total;
+     private float $sub_total;
 
     /** @var float Total tax */
-    public float $tax_total;
+     private float $tax_total;
 
     /** @var float Total of the purchase order */
-    public float $total;
+     private float $total;
 
     /** @var array Taxes */
-    public array $taxes;
+     private array $taxes;
 
-    /** @var array Acquisition VAT summary (🇬🇧, Europe only) */
-    public array $acquisition_vat_summary;
+    /** @var array Acquisition VAT summary (GB, Europe only) */
+     private array $acquisition_vat_summary;
 
-    /** @var float Acquisition VAT total (🇬🇧, Europe only) */
-    public float $acquisition_vat_total;
+    /** @var float Acquisition VAT total (GB, Europe only) */
+     private float $acquisition_vat_total;
 
-    /** @var array Reverse charge VAT summary (🇬🇧, Europe only) */
-    public array $reverse_charge_vat_summary;
+    /** @var array Reverse charge VAT summary (GB, Europe only) */
+     private array $reverse_charge_vat_summary;
 
-    /** @var float Reverse charge VAT total (🇬🇧, Europe only) */
-    public float $reverse_charge_vat_total;
+    /** @var float Reverse charge VAT total (GB, Europe only) */
+     private float $reverse_charge_vat_total;
 
     /** @var object Billing address */
-    public object $billing_address;
+     private object $billing_address;
 
     /** @var string Notes for the vendor */
-    public string $notes;
+     private string $notes;
 
     /** @var string Terms of the purchase order */
-    public string $terms;
+     private string $terms;
 
     /** @var string Shipment preference */
-    public string $ship_via;
+     private string $ship_via;
 
     /** @var string Shipment preference ID */
-    public string $ship_via_id;
+     private string $ship_via_id;
 
     /** @var string Delivery contact person */
-    public string $attention;
+     private string $attention;
 
     /** @var string Delivery address ID */
-    public string $delivery_org_address_id;
+     private string $delivery_org_address_id;
 
     /** @var string Delivery customer ID */
-    public string $delivery_customer_id;
+     private string $delivery_customer_id;
 
     /** @var object Delivery address */
-    public object $delivery_address;
+     private object $delivery_address;
 
     /** @var int Price precision */
-    public int $price_precision;
+     private int $price_precision;
 
     /** @var array Custom fields */
-    public array $custom_fields;
+     private array $custom_fields;
 
     /** @var string Attachment name */
-    public string $attachment_name;
+     private string $attachment_name;
 
     /** @var bool Can send in mail */
-    public bool $can_send_in_mail;
+     private bool $can_send_in_mail;
 
     /** @var string Template ID */
-    public string $template_id;
+     private string $template_id;
 
     /** @var string Template name */
-    public string $template_name;
+     private string $template_name;
 
     /** @var string Page width */
-    public string $page_width;
+     private string $page_width;
 
     /** @var string Page height */
-    public string $page_height;
+     private string $page_height;
 
     /** @var string Orientation */
-    public string $orientation;
+     private string $orientation;
 
     /** @var string Template type */
-    public string $template_type;
+     private string $template_type;
 
     /** @var string Created time */
-    public string $created_time;
+     private string $created_time;
 
     /** @var string Created by ID */
-    public string $created_by_id;
+     private string $created_by_id;
 
     /** @var string Last modified time */
-    public string $last_modified_time;
+     private string $last_modified_time;
 
     /** @var bool Can mark as bill */
-    public bool $can_mark_as_bill;
+     private bool $can_mark_as_bill;
 
     /** @var bool Can mark as unbill */
-    public bool $can_mark_as_unbill;
+     private bool $can_mark_as_unbill;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->purchaseorder_id = $data['purchaseorder_id'] ?? '';
         $this->documents = $data['documents'] ?? [];
         $this->vat_treatment = $data['vat_treatment'] ?? '';
@@ -270,5 +278,18 @@ class PurchaseOrderDto
         $this->last_modified_time = $data['last_modified_time'] ?? '';
         $this->can_mark_as_bill = $data['can_mark_as_bill'] ?? false;
         $this->can_mark_as_unbill = $data['can_mark_as_unbill'] ?? false;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }

@@ -5,11 +5,14 @@ namespace Sumer5020\ZohoBooks\DTOs;
 use Sumer5020\ZohoBooks\Enums\AllowedContactLanguageEnum;
 
 /**
- * Class ContactDTO
- * Data Transfer Object for Contact details.
+ * Class ContactDto
+ * Data Transfer Object for a contact.
  */
 class ContactDto
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string ID of the contact */
     public string $contact_id;
 
@@ -40,68 +43,68 @@ class ContactDto
     /** @var bool Whether the contact is taxable */
     public bool $is_taxable;
 
-    /** @var string|null Tax ID (only for certain regions) */
-    public ?string $tax_id;
+    /** @var string Tax ID (only for certain regions) */
+    public string $tax_id;
 
-    /** @var string|null TDS tax ID (specific to certain regions) */
-    public ?string $tds_tax_id;
+    /** @var string TDS tax ID (specific to certain regions) */
+    public string $tds_tax_id;
 
-    /** @var string|null Tax name */
-    public ?string $tax_name;
+    /** @var string Tax name */
+    public string $tax_name;
 
-    /** @var float|null Tax percentage */
-    public ?float $tax_percentage;
+    /** @var float Tax percentage */
+    public float $tax_percentage;
 
-    /** @var string|null Tax authority ID */
-    public ?string $tax_authority_id;
+    /** @var string Tax authority ID */
+    public string $tax_authority_id;
 
-    /** @var string|null Tax exemption ID */
-    public ?string $tax_exemption_id;
+    /** @var string Tax exemption ID */
+    public string $tax_exemption_id;
 
-    /** @var string|null Tax authority name */
-    public ?string $tax_authority_name;
+    /** @var string Tax authority name */
+    public string $tax_authority_name;
 
-    /** @var string|null Tax exemption code */
-    public ?string $tax_exemption_code;
+    /** @var string Tax exemption code */
+    public string $tax_exemption_code;
 
-    /** @var string|null Place of contact (specific to certain regions) */
-    public ?string $place_of_contact;
+    /** @var string Place of contact (specific to certain regions) */
+    public string $place_of_contact;
 
-    /** @var string|null GST number (specific to certain regions) */
-    public ?string $gst_no;
+    /** @var string GST number (specific to certain regions) */
+    public string $gst_no;
 
-    /** @var string|null VAT treatment (specific to certain regions) */
-    public ?string $vat_treatment;
+    /** @var string VAT treatment (specific to certain regions) */
+    public string $vat_treatment;
 
-    /** @var string|null Tax treatment (specific to certain regions) */
-    public ?string $tax_treatment;
+    /** @var string Tax treatment (specific to certain regions) */
+    public string $tax_treatment;
 
-    /** @var string|null Tax exemption certificate number (specific to certain regions) */
-    public ?string $tax_exemption_certificate_number;
+    /** @var string Tax exemption certificate number (specific to certain regions) */
+    public string $tax_exemption_certificate_number;
 
-    /** @var string|null Tax regime (specific to certain regions) */
-    public ?string $tax_regime;
+    /** @var string Tax regime (specific to certain regions) */
+    public string $tax_regime;
 
-    /** @var string|null Legal name (specific to certain regions) */
-    public ?string $legal_name;
+    /** @var string Legal name (specific to certain regions) */
+    public string $legal_name;
 
-    /** @var bool|null Whether the contact is TDS registered (specific to certain regions) */
-    public ?bool $is_tds_registered;
+    /** @var bool Whether the contact is TDS registered (specific to certain regions) */
+    public bool $is_tds_registered;
 
-    /** @var string|null GST treatment (specific to certain regions) */
-    public ?string $gst_treatment;
+    /** @var string GST treatment (specific to certain regions) */
+    public string $gst_treatment;
 
-    /** @var bool|null Whether the contact is linked with Zoho CRM */
-    public ?bool $is_linked_with_zohocrm;
+    /** @var bool Whether the contact is linked with Zoho CRM */
+    public bool $is_linked_with_zohocrm;
 
-    /** @var string|null Website of the contact */
-    public ?string $website;
+    /** @var string Website of the contact */
+    public string $website;
 
-    /** @var string|null Owner ID of the contact */
-    public ?string $owner_id;
+    /** @var string Owner ID of the contact */
+    public string $owner_id;
 
-    /** @var string|null Primary contact ID (unavailable) */
-    public ?string $primary_contact_id;
+    /** @var string Primary contact ID (unavailable) */
+    public string $primary_contact_id;
 
     /** @var int Payment terms (in days) */
     public int $payment_terms;
@@ -172,13 +175,40 @@ class ContactDto
     /** @var string Time at which the contact was last modified */
     public string $last_modified_time;
 
+    /** @var array Filter all your reports based on the tag */
+    private array $tags;
+
+    /** @var string Exemption certificate number of the customer (Avalara Integration only) */
+    private string $avatax_exempt_no;
+    
+    /** @var string Used to group like customers for exemption purposes (Avalara Integration only) */
+    private string $avatax_use_code;
+    
+    /** @var string Two letter country code of a contact (GB, GCC, Avalara Integration only) */
+    private string $country_code;
+    
+    /** @var string Tax Registration number (GCC, MX, KE, ZA only) */
+    private string $tax_reg_no;
+    
+    /** @var string VAT Registration number (GB, Avalara Integration only) */
+    private string $vat_reg_no;
+    
+    /** @var string Boolean to track a contact for 1099 reporting */
+    private bool $track_1099;
+    
+    /** @var string Tax ID type of the contact, it can be SSN, ATIN, ITIN or EIN */
+    private string $tax_id_type;
+    
+    /** @var string Tax ID of the contact */
+    private string $tax_id_value;
+
     /**
-     * ContactDTO constructor.
-     *
-     * @param array $data Data to initialize the DTO.
+     * @param array $data
      */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->contact_id = $data['contact_id'] ?? '';
         $this->contact_name = $data['contact_name'] ?? '';
         $this->company_name = $data['company_name'] ?? '';
@@ -189,27 +219,27 @@ class ContactDto
         $this->is_portal_enabled = $data['is_portal_enabled'] ?? false;
         $this->language_code = $data['language_code'] ?? AllowedContactLanguageEnum::EN->code();
         $this->is_taxable = $data['is_taxable'] ?? false;
-        $this->tax_id = $data['tax_id'] ?? null;
-        $this->tds_tax_id = $data['tds_tax_id'] ?? null;
-        $this->tax_name = $data['tax_name'] ?? null;
+        $this->tax_id = $data['tax_id'] ?? '';
+        $this->tds_tax_id = $data['tds_tax_id'] ?? '';
+        $this->tax_name = $data['tax_name'] ?? '';
         $this->tax_percentage = $data['tax_percentage'] ?? 0.0;
-        $this->tax_authority_id = $data['tax_authority_id'] ?? null;
-        $this->tax_exemption_id = $data['tax_exemption_id'] ?? null;
-        $this->tax_authority_name = $data['tax_authority_name'] ?? null;
-        $this->tax_exemption_code = $data['tax_exemption_code'] ?? null;
-        $this->place_of_contact = $data['place_of_contact'] ?? null;
-        $this->gst_no = $data['gst_no'] ?? null;
-        $this->vat_treatment = $data['vat_treatment'] ?? null;
-        $this->tax_treatment = $data['tax_treatment'] ?? null;
-        $this->tax_exemption_certificate_number = $data['tax_exemption_certificate_number'] ?? null;
-        $this->tax_regime = $data['tax_regime'] ?? null;
-        $this->legal_name = $data['legal_name'] ?? null;
+        $this->tax_authority_id = $data['tax_authority_id'] ?? '';
+        $this->tax_exemption_id = $data['tax_exemption_id'] ?? '';
+        $this->tax_authority_name = $data['tax_authority_name'] ?? '';
+        $this->tax_exemption_code = $data['tax_exemption_code'] ?? '';
+        $this->place_of_contact = $data['place_of_contact'] ?? '';
+        $this->gst_no = $data['gst_no'] ?? '';
+        $this->vat_treatment = $data['vat_treatment'] ?? '';
+        $this->tax_treatment = $data['tax_treatment'] ?? '';
+        $this->tax_exemption_certificate_number = $data['tax_exemption_certificate_number'] ?? '';
+        $this->tax_regime = $data['tax_regime'] ?? '';
+        $this->legal_name = $data['legal_name'] ?? '';
         $this->is_tds_registered = $data['is_tds_registered'] ?? false;
-        $this->gst_treatment = $data['gst_treatment'] ?? null;
+        $this->gst_treatment = $data['gst_treatment'] ?? '';
         $this->is_linked_with_zohocrm = $data['is_linked_with_zohocrm'] ?? false;
-        $this->website = $data['website'] ?? null;
-        $this->owner_id = $data['owner_id'] ?? null;
-        $this->primary_contact_id = $data['primary_contact_id'] ?? null;
+        $this->website = $data['website'] ?? '';
+        $this->owner_id = $data['owner_id'] ?? '';
+        $this->primary_contact_id = $data['primary_contact_id'] ?? '';
         $this->payment_terms = $data['payment_terms'] ?? 0;
         $this->payment_terms_label = $data['payment_terms_label'] ?? '';
         $this->currency_id = $data['currency_id'] ?? '';
@@ -233,5 +263,27 @@ class ContactDto
         $this->notes = $data['notes'] ?? '';
         $this->created_time = $data['created_time'] ?? '';
         $this->last_modified_time = $data['last_modified_time'] ?? '';
+        $this->tags  = $data['tags'] ?? [];
+        $this->avatax_exempt_no = $data['avatax_exempt_no'] ?? '';
+        $this->avatax_use_code = $data['avatax_use_code'] ?? '';
+        $this->country_code = $data['country_code'] ?? '';
+        $this->tax_reg_no = $data['tax_reg_no'] ?? '';
+        $this->vat_reg_no = $data['vat_reg_no'] ?? '';
+        $this->track_1099 = $data['track_1099'] ?? false;
+        $this->tax_id_type = $data['tax_id_type'] ?? '';
+        $this->tax_id_value = $data['tax_id_value'] ?? '';
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }

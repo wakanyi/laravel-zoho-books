@@ -3,85 +3,93 @@
 namespace Sumer5020\ZohoBooks\DTOs;
 
 /**
- * Class TimeEntryDTO
+ * Class TimeEntryDto
  * Data Transfer Object for a Time Entry.
  */
 class TimeEntryDto
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string Unique ID of the time entry */
-    public string $time_entry_id;
+     private string $time_entry_id;
 
     /** @var string Search time entries by project ID */
-    public string $project_id;
+     private string $project_id;
 
     /** @var string Name of the project */
-    public string $project_name;
+     private string $project_name;
 
     /** @var string Search projects by customer ID */
-    public string $customer_id;
+     private string $customer_id;
 
     /** @var string Name of the customer */
-    public string $customer_name;
+     private string $customer_name;
 
     /** @var string ID of the task */
-    public string $task_id;
+     private string $task_id;
 
     /** @var string Name of the task */
-    public string $task_name;
+     private string $task_name;
 
     /** @var string Search time entries by user ID */
-    public string $user_id;
+     private string $user_id;
 
     /** @var string Name of the user */
-    public string $user_name;
+     private string $user_name;
 
     /** @var bool Check if the user is the current user */
-    public bool $is_current_user;
+     private bool $is_current_user;
 
     /** @var string Date on which the user spent time on the task (format: HH:mm) */
-    public string $log_date;
+     private string $log_date;
 
     /** @var string Begin time of the entry */
-    public string $begin_time;
+     private string $begin_time;
 
     /** @var string End time of the entry */
-    public string $end_time;
+     private string $end_time;
 
     /** @var string Total logged time */
-    public string $log_time;
+     private string $log_time;
 
     /** @var bool Check if the time entry is billable */
-    public bool $is_billable;
+     private bool $is_billable;
 
     /** @var string Status of the billing */
-    public string $billed_status;
+     private string $billed_status;
 
     /** @var string ID of the associated invoice */
-    public string $invoice_id;
+     private string $invoice_id;
 
     /** @var string Notes associated with the time entry */
-    public string $notes;
+     private string $notes;
 
     /** @var string When the timer started */
-    public string $timer_started_at;
+     private string $timer_started_at;
 
     /** @var string UTC time when the timer started */
-    public string $timer_started_at_utc_time;
+     private string $timer_started_at_utc_time;
 
     /** @var string Duration of the timer in minutes */
-    public string $timer_duration_in_minutes;
+     private string $timer_duration_in_minutes;
 
     /** @var string Duration of the timer in seconds */
-    public string $timer_duration_in_seconds;
+     private string $timer_duration_in_seconds;
 
     /** @var string Created time of the entry */
-    public string $created_time;
+     private string $created_time;
 
-    /** @var string Custom fields for the timesheet */
-    public string $timesheet_custom_fields;
+    /** @var string Custom fields for the time sheet */
+     private string $timesheet_custom_fields;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->time_entry_id = $data['time_entry_id'] ?? '';
         $this->project_id = $data['project_id'] ?? '';
         $this->project_name = $data['project_name'] ?? '';
@@ -106,5 +114,18 @@ class TimeEntryDto
         $this->timer_duration_in_seconds = $data['timer_duration_in_seconds'] ?? '';
         $this->created_time = $data['created_time'] ?? '';
         $this->timesheet_custom_fields = $data['timesheet_custom_fields'] ?? '';
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }

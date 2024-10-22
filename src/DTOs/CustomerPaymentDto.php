@@ -3,61 +3,69 @@
 namespace Sumer5020\ZohoBooks\DTOs;
 
 /**
- * Class CustomerPaymentDTO
+ * Class CustomerPaymentDto
  * Data Transfer Object for a Customer Payment.
  */
 class CustomerPaymentDto
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string Unique ID of the payment */
-    public string $payment_id;
+     private string $payment_id;
 
     /** @var string Mode through which payment is made */
-    public string $payment_mode;
+     private string $payment_mode;
 
     /** @var float Amount paid */
-    public float $amount;
+     private float $amount;
 
     /** @var float Amount refunded */
-    public float $amount_refunded;
+     private float $amount_refunded;
 
     /** @var float Additional bank charges */
-    public float $bank_charges;
+     private float $bank_charges;
 
     /** @var string Date of payment in yyyy-mm-dd format */
-    public string $date;
+     private string $date;
 
     /** @var string Status of the payment */
-    public string $status;
+     private string $status;
 
     /** @var string Reference number for the payment */
-    public string $reference_number;
+     private string $reference_number;
 
     /** @var string Description about the payment */
-    public string $description;
+     private string $description;
 
     /** @var string Customer ID */
-    public string $customer_id;
+     private string $customer_id;
 
     /** @var string Customer name */
-    public string $customer_name;
+     private string $customer_name;
 
     /** @var string Customer's email address */
-    public string $email;
+     private string $email;
 
     /** @var array List of associated invoices */
-    public array $invoices;
+     private array $invoices;
 
     /** @var string Currency code */
-    public string $currency_code;
+     private string $currency_code;
 
     /** @var string Customer's currency symbol */
-    public string $currency_symbol;
+     private string $currency_symbol;
 
     /** @var array Custom fields for the payment */
-    public array $custom_fields;
+     private array $custom_fields;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->payment_id = $data['payment_id'] ?? '';
         $this->payment_mode = $data['payment_mode'] ?? '';
         $this->amount = $data['amount'] ?? 0.0;
@@ -74,5 +82,18 @@ class CustomerPaymentDto
         $this->currency_code = $data['currency_code'] ?? '';
         $this->currency_symbol = $data['currency_symbol'] ?? '';
         $this->custom_fields = $data['custom_fields'] ?? [];
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }

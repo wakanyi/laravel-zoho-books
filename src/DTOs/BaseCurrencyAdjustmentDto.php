@@ -3,34 +3,42 @@
 namespace Sumer5020\ZohoBooks\DTOs;
 
 /**
- * Class BaseCurrencyAdjustmentDTO
+ * Class BaseCurrencyAdjustmentDto
  * Data Transfer Object for a Base Currency Adjustment.
  */
 class BaseCurrencyAdjustmentDto
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string ID of the Base Currency Adjustment */
-    public string $base_currency_adjustment_id;
+     private string $base_currency_adjustment_id;
 
     /** @var string Date of adjustment */
-    public string $adjustment_date;
+     private string $adjustment_date;
 
     /** @var float Exchange rate of the currency */
-    public float $exchange_rate;
+     private float $exchange_rate;
 
     /** @var string ID of currency for which we need to post adjustment */
-    public string $currency_id;
+     private string $currency_id;
 
     /** @var array Accounts associated with the adjustment */
-    public array $accounts;
+     private array $accounts;
 
     /** @var string Notes for base currency adjustment */
-    public string $notes;
+     private string $notes;
 
     /** @var string Currency Code involved in the Adjustment */
-    public string $currency_code;
+     private string $currency_code;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->base_currency_adjustment_id = $data['base_currency_adjustment_id'] ?? '';
         $this->adjustment_date = $data['adjustment_date'] ?? '';
         $this->exchange_rate = $data['exchange_rate'] ?? 0.0;
@@ -38,5 +46,18 @@ class BaseCurrencyAdjustmentDto
         $this->accounts = $data['accounts'] ?? [];
         $this->notes = $data['notes'] ?? '';
         $this->currency_code = $data['currency_code'] ?? '';
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }

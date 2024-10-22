@@ -3,76 +3,84 @@
 namespace Sumer5020\ZohoBooks\DTOs;
 
 /**
- * Class BankRuleDTO
+ * Class BankRuleDto
  * Data Transfer Object for a Bank Rule.
  */
 class BankRuleDTO
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string ID of the Rule */
-    public string $rule_id;
+     private string $rule_id;
 
     /** @var string Name of the Rule */
-    public string $rule_name;
+     private string $rule_name;
 
     /** @var int Order of the rule */
-    public int $rule_order;
+     private int $rule_order;
 
     /** @var string Entities to which Rule must be applied */
-    public string $apply_to;
+     private string $apply_to;
 
     /** @var string Type of Criteria */
-    public string $criteria_type;
+     private string $criteria_type;
 
     /** @var array Criterion details */
-    public array $criterion;
+     private array $criterion;
 
     /** @var string Entity as which it should be recorded */
-    public string $record_as;
+     private string $record_as;
 
     /** @var string Account ID of the Bank */
-    public string $account_id;
+     private string $account_id;
 
     /** @var string Name of the account */
-    public string $account_name;
+     private string $account_name;
 
     /** @var string Tax ID involved in the transaction */
-    public string $tax_id;
+     private string $tax_id;
 
     /** @var string ID of the Customer Associated with the Rule */
-    public string $customer_id;
+     private string $customer_id;
 
     /** @var string Name of the Customer Associated with the Rule */
-    public string $customer_name;
+     private string $customer_name;
 
     /** @var string Specifies if Reference number is manual or generated from the statement */
-    public string $reference_number;
+     private string $reference_number;
 
     /** @var string Payment Mode Associated with the Rule */
-    public string $payment_mode;
+     private string $payment_mode;
 
     /** @var string VAT treatment for the bank rules */
-    public ?string $vat_treatment;
+     private string $vat_treatment;
 
     /** @var string VAT treatment for the bank transaction */
-    public ?string $tax_treatment;
+     private string $tax_treatment;
 
     /** @var bool Used to specify whether the transaction is applicable for Domestic Reverse Charge (DRC) */
-    public ?bool $is_reverse_charge_applied;
+     private bool $is_reverse_charge_applied;
 
     /** @var string Product Type associated with the Rule */
-    public ?string $product_type;
+     private string $product_type;
 
     /** @var string ID of the Tax Authority Associated with the Rule */
-    public ?string $tax_authority_id;
+     private string $tax_authority_id;
 
     /** @var string Name of the Tax Authority Associated with the Rule */
-    public ?string $tax_authority_name;
+     private string $tax_authority_name;
 
     /** @var string Code of the Tax Exemption Associated with the Rule */
-    public ?string $tax_exemption_code;
+     private string $tax_exemption_code;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->rule_id = $data['rule_id'] ?? '';
         $this->rule_name = $data['rule_name'] ?? '';
         $this->rule_order = $data['rule_order'] ?? 0;
@@ -87,12 +95,25 @@ class BankRuleDTO
         $this->customer_name = $data['customer_name'] ?? '';
         $this->reference_number = $data['reference_number'] ?? '';
         $this->payment_mode = $data['payment_mode'] ?? '';
-        $this->vat_treatment = $data['vat_treatment'] ?? null;
-        $this->tax_treatment = $data['tax_treatment'] ?? null;
-        $this->is_reverse_charge_applied = $data['is_reverse_charge_applied'] ?? null;
-        $this->product_type = $data['product_type'] ?? null;
-        $this->tax_authority_id = $data['tax_authority_id'] ?? null;
-        $this->tax_authority_name = $data['tax_authority_name'] ?? null;
-        $this->tax_exemption_code = $data['tax_exemption_code'] ?? null;
+        $this->vat_treatment = $data['vat_treatment'] ?? '';
+        $this->tax_treatment = $data['tax_treatment'] ?? '';
+        $this->is_reverse_charge_applied = $data['is_reverse_charge_applied'] ?? false;
+        $this->product_type = $data['product_type'] ?? '';
+        $this->tax_authority_id = $data['tax_authority_id'] ?? '';
+        $this->tax_authority_name = $data['tax_authority_name'] ?? '';
+        $this->tax_exemption_code = $data['tax_exemption_code'] ?? '';
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }

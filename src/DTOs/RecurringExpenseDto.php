@@ -3,151 +3,159 @@
 namespace Sumer5020\ZohoBooks\DTOs;
 
 /**
- * Class RecurringExpenseDTO
+ * Class RecurringExpenseDto
  * Data Transfer Object for a Recurring Expense.
  */
 class RecurringExpenseDto
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string Account ID */
-    public string $account_id;
+     private string $account_id;
 
     /** @var string Name of the Recurring Expense */
-    public string $recurrence_name;
+     private string $recurrence_name;
 
     /** @var string Start date of the recurring expense */
-    public string $start_date;
+     private string $start_date;
 
     /** @var string End date of the recurring expense */
-    public string $end_date;
+     private string $end_date;
 
-    /** @var bool Pre-GST applicability (🇮🇳 only) */
-    public bool $is_pre_gst;
+    /** @var bool Pre-GST applicability (IN only) */
+     private bool $is_pre_gst;
 
-    /** @var string Source of supply (🇮🇳 only) */
-    public string $source_of_supply;
+    /** @var string Source of supply (IN only) */
+     private string $source_of_supply;
 
-    /** @var string Destination of supply (🇮🇳 only) */
-    public string $destination_of_supply;
+    /** @var string Destination of supply (IN only) */
+     private string $destination_of_supply;
 
     /** @var string Place of supply (GCC only) */
-    public string $place_of_supply;
+     private string $place_of_supply;
 
-    /** @var string GST identification number (🇮🇳 only) */
-    public string $gst_no;
+    /** @var string GST identification number (IN only) */
+     private string $gst_no;
 
-    /** @var string GST treatment (🇮🇳 only) */
-    public string $gst_treatment;
+    /** @var string GST treatment (IN only) */
+     private string $gst_treatment;
 
-    /** @var string Tax treatment (GCC, 🇲🇽, 🇰🇪, 🇿🇦 only) */
-    public string $tax_treatment;
+    /** @var string Tax treatment (GCC, MX, KE, ZA only) */
+     private string $tax_treatment;
 
-    /** @var string Destination of supply state (🇮🇳 only) */
-    public string $destination_of_supply_state;
+    /** @var string Destination of supply state (IN only) */
+     private string $destination_of_supply_state;
 
-    /** @var string HSN/SAC code (🇮🇳, 🇰🇪 only) */
-    public string $hsn_or_sac;
+    /** @var string HSN/SAC code (IN, KE only) */
+     private string $hsn_or_sac;
 
-    /** @var string VAT treatment (🇬🇧 only) */
-    public string $vat_treatment;
+    /** @var string VAT treatment (GB only) */
+     private string $vat_treatment;
 
-    /** @var string Reverse charge tax ID (🇮🇳, GCC, 🇿🇦 only) */
-    public string $reverse_charge_tax_id;
+    /** @var string Reverse charge tax ID (IN, GCC, ZA only) */
+     private string $reverse_charge_tax_id;
 
-    /** @var string Reverse charge tax name (🇮🇳 only) */
-    public string $reverse_charge_tax_name;
+    /** @var string Reverse charge tax name (IN only) */
+     private string $reverse_charge_tax_name;
 
-    /** @var float Reverse charge tax percentage (🇮🇳 only) */
-    public float $reverse_charge_tax_percentage;
+    /** @var float Reverse charge tax percentage (IN only) */
+     private float $reverse_charge_tax_percentage;
 
-    /** @var float Reverse charge tax amount (🇮🇳 only) */
-    public float $reverse_charge_tax_amount;
+    /** @var float Reverse charge tax amount (IN only) */
+     private float $reverse_charge_tax_amount;
 
-    /** @var bool Is reverse charge applied (🇮🇳 only) */
-    public bool $is_reverse_charge_applied;
+    /** @var bool Is reverse charge applied (IN only) */
+     private bool $is_reverse_charge_applied;
 
     /** @var float Acquisition VAT total */
-    public float $acquisition_vat_total;
+     private float $acquisition_vat_total;
 
-    /** @var float Reverse charge VAT total (🇮🇳 only) */
-    public float $reverse_charge_vat_total;
+    /** @var float Reverse charge VAT total (IN only) */
+     private float $reverse_charge_vat_total;
 
     /** @var array Acquisition VAT summary */
-    public array $acquisition_vat_summary;
+     private array $acquisition_vat_summary;
 
     /** @var array Reverse charge VAT summary */
-    public array $reverse_charge_vat_summary;
+     private array $reverse_charge_vat_summary;
 
     /** @var string Recurrence frequency */
-    public string $recurrence_frequency;
+     private string $recurrence_frequency;
 
     /** @var string Repeat every */
-    public string $repeat_every;
+     private string $repeat_every;
 
     /** @var float Recurring Expense amount */
-    public float $amount;
+     private float $amount;
 
     /** @var float Total */
-    public float $total;
+     private float $total;
 
     /** @var float Subtotal */
-    public float $sub_total;
+     private float $sub_total;
 
     /** @var float Base currency total */
-    public float $bcy_total;
+     private float $bcy_total;
 
-    /** @var string Product type (🇬🇧, 🇿🇦 only) */
-    public string $product_type;
+    /** @var string Product type (GB, ZA only) */
+     private string $product_type;
 
-    /** @var string Acquisition VAT ID (🇬🇧 only) */
-    public string $acquisition_vat_id;
+    /** @var string Acquisition VAT ID (GB only) */
+     private string $acquisition_vat_id;
 
-    /** @var string Reverse charge VAT ID (🇮🇳, 🇬🇧 only) */
-    public string $reverse_charge_vat_id;
+    /** @var string Reverse charge VAT ID (IN, GB only) */
+     private string $reverse_charge_vat_id;
 
     /** @var string Tax ID */
-    public string $tax_id;
+     private string $tax_id;
 
     /** @var string Tax name */
-    public string $tax_name;
+     private string $tax_name;
 
     /** @var float Tax percentage */
-    public float $tax_percentage;
+     private float $tax_percentage;
 
     /** @var string Created time */
-    public string $created_time;
+     private string $created_time;
 
     /** @var string Last modified time */
-    public string $last_modified_time;
+     private string $last_modified_time;
 
     /** @var bool Is inclusive tax */
-    public bool $is_inclusive_tax;
+     private bool $is_inclusive_tax;
 
     /** @var bool Is billable */
-    public bool $is_billable;
+     private bool $is_billable;
 
     /** @var string Customer ID */
-    public string $customer_id;
+     private string $customer_id;
 
     /** @var string Currency ID */
-    public string $currency_id;
+     private string $currency_id;
 
     /** @var float Exchange rate */
-    public float $exchange_rate;
+     private float $exchange_rate;
 
     /** @var string Project ID */
-    public string $project_id;
+     private string $project_id;
 
     /** @var string Project name */
-    public string $project_name;
+     private string $project_name;
 
     /** @var array Custom fields */
-    public array $custom_fields;
+     private array $custom_fields;
 
     /** @var object Line item */
-    public object $line_item;
+     private object $line_item;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->account_id = $data['account_id'] ?? '';
         $this->recurrence_name = $data['recurrence_name'] ?? '';
         $this->start_date = $data['start_date'] ?? '';
@@ -194,5 +202,18 @@ class RecurringExpenseDto
         $this->project_name = $data['project_name'] ?? '';
         $this->custom_fields = $data['custom_fields'] ?? [];
         $this->line_item = $data['line_item'] ?? (object)[];
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }

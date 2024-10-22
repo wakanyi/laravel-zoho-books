@@ -3,75 +3,78 @@
 namespace Sumer5020\ZohoBooks\DTOs;
 
 /**
- * Class ItemDTO
+ * Class ItemDto
  * Data Transfer Object for an Item.
  */
 class ItemDto
 {
+    /** @var array Inputs data */
+    private array $_data;
+
     /** @var string ID of the item */
-    public string $item_id;
+     private string $item_id;
 
     /** @var string Name of the item (Max-length [100]) */
-    public string $name;
+     private string $name;
 
     /** @var string Status of the item (active or inactive) */
-    public string $status;
+     private string $status;
 
     /** @var string Description for the item (Max-length [2000]) */
-    public string $description;
+     private string $description;
 
     /** @var float Price of the item */
-    public float $rate;
+     private float $rate;
 
     /** @var string Measurement unit for the item */
-    public string $unit;
+     private string $unit;
 
     /** @var string ID of the tax to be associated with the item */
-    public string $tax_id;
+     private string $tax_id;
 
     /** @var string ID of the purchase tax rule (for specific regions) */
-    public string $purchase_tax_rule_id;
+     private string $purchase_tax_rule_id;
 
     /** @var string ID of the sales tax rule (for specific regions) */
-    public string $sales_tax_rule_id;
+     private string $sales_tax_rule_id;
 
     /** @var string HSN Code (for specific regions) */
-    public string $hsn_or_sac;
+     private string $hsn_or_sac;
 
     /** @var string SAT Item Key Code (for Mexico only) */
-    public string $sat_item_key_code;
+     private string $sat_item_key_code;
 
     /** @var string Unit Key Code (for Mexico only) */
-    public string $unitkey_code;
+     private string $unitkey_code;
 
     /** @var string Percent of the tax */
-    public string $tax_percentage;
+     private string $tax_percentage;
 
     /** @var string Type of the tax */
-    public string $tax_type;
+     private string $tax_type;
 
     /** @var string SKU value of the item, should be unique throughout the product */
-    public string $sku;
+     private string $sku;
 
     /** @var string Specify the type of an item (goods, service, or digital_service) */
-    public string $product_type;
+     private string $product_type;
 
     /** @var array Item tax preferences (for specific regions) */
-    public array $item_tax_preferences;
+     private array $item_tax_preferences;
 
     /** @var array Custom fields for the item */
-    public array $custom_fields;
+     private array $custom_fields;
 
     /** @var array Warehouses information */
-    public array $warehouses;
+     private array $warehouses;
 
     /**
-     * ItemDto constructor.
-     *
-     * @param array $data Data for the Item.
+     * @param array $data
      */
     public function __construct(array $data)
     {
+        $this->_data = array_keys($data);
+
         $this->item_id = $data['item_id'] ?? '';
         $this->name = $data['name'] ?? '';
         $this->status = $data['status'] ?? '';
@@ -91,5 +94,18 @@ class ItemDto
         $this->item_tax_preferences = $data['item_tax_preferences'] ?? [];
         $this->custom_fields = $data['custom_fields'] ?? [];
         $this->warehouses = $data['warehouses'] ?? [];
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_reduce($this->_data, function ($result, $key) {
+            if (property_exists($this, $key)) {
+                $result[$key] = $this->$key;
+            }
+            return $result;
+        }, []);
     }
 }
