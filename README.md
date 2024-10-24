@@ -26,7 +26,7 @@
 ## Features
 
 - [x] Authentication end points
-- [ ] Contact end points
+- [x] Contact end points
 
 <details><summary>Coming soon features ✨</summary>
 
