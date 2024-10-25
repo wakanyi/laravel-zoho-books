@@ -36,7 +36,10 @@ class ContactPersonDto
      private string $mobile;
 
     /** @var bool Whether the contact person is the primary contact for the related contact */
-     private bool $is_primary_contact;
+    private bool $is_primary_contact;
+
+    /** @var bool Option to enable the portal access */
+    private bool $enable_portal;
 
     /** @var string Skype address of the contact person (max-length: 50) */
      private string $skype;
@@ -66,6 +69,7 @@ class ContactPersonDto
         $this->phone = $data['phone'] ?? '';
         $this->mobile = $data['mobile'] ?? '';
         $this->is_primary_contact = $data['is_primary_contact'] ?? false;
+        $this->enable_portal = $data['enable_portal'] ?? false;
         $this->skype = $data['skype'] ?? '';
         $this->designation = $data['designation'] ?? '';
         $this->department = $data['department'] ?? '';

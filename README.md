@@ -27,6 +27,7 @@
 
 - [x] Authentication end points
 - [x] Contact end points
+- [x] Contact Person end points
 
 <details><summary>Coming soon features ✨</summary>
 
@@ -36,7 +37,6 @@
 - [ ] Base Currency Adjustment end points
 - [ ] Bill end points
 - [ ] Chart Of Account end points
-- [ ] Contact Person end points
 - [ ] Credit Note end points
 - [ ] Currency end points
 - [ ] Customer Payment end points
