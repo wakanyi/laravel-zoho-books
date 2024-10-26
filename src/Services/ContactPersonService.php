@@ -42,7 +42,7 @@ class ContactPersonService implements ContactPersonInterface {
      */
     public function update(string $accessToken, string $organization_id, string $contact_person_id, ContactPersonDto $contactPersonDto): array
     {
-        $url = config('zohoBooks.url') . '/contacts/contactpersons/'.$contact_person_id.'/?organization_id=' . $organization_id;
+        $url = config('zohoBooks.url') . '/contacts/contactpersons/'.$contact_person_id.'?organization_id=' . $organization_id;
 
         try {
             return Http::withHeaders([
@@ -133,7 +133,7 @@ class ContactPersonService implements ContactPersonInterface {
      */
     public function markAsPrimary(string $accessToken, string $organization_id, string $contact_person_id): array
     {
-        $url = config('zohoBooks.url') . '/contacts/contactpersons/'.$contact_person_id.'primary?organization_id=' . $organization_id;
+        $url = config('zohoBooks.url') . '/contacts/contactpersons/'.$contact_person_id.'/primary?organization_id=' . $organization_id;
 
         try {
             return Http::withHeaders([

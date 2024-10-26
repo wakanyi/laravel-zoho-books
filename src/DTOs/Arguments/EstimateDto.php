@@ -36,7 +36,10 @@ class EstimateDto
      private string $gst_treatment;
 
     /** @var string VAT treatment (Supported for GCC, MX, KE, ZA) */
-     private string $tax_treatment;
+    private string $tax_treatment;
+
+    /** @var string VAT treatment for the estimates (Optional) */
+    private string $vat_treatment;
 
     /** @var bool Specifies whether reverse charge is applied for ZA */
      private bool $is_reverse_charge_applied;
@@ -77,6 +80,12 @@ class EstimateDto
     /** @var bool Specifies whether line item rates are inclusive of tax */
      private bool $is_inclusive_tax;
 
+    /** @var string Custom body */
+    private string $custom_body;
+
+    /** @var string Custom subject */
+    private string $custom_subject;
+
     /** @var array Line items of the estimate */
      private array $line_items;
 
@@ -87,7 +96,22 @@ class EstimateDto
      private float $adjustment;
 
     /** @var string Description of the adjustment */
-     private string $adjustment_description;
+    private string $adjustment_description;
+
+    /** @var string ID of the tax or tax group applied to the estimate */
+    private string $tax_id;
+
+    /** @var string ID of the tax exemption */
+    private string $tax_exemption_id;
+
+    /** @var string ID of the tax authority */
+    private string $tax_authority_id;
+
+    /** @var string Used to group like customers for exemption purposes */
+    private string $avatax_use_code;
+
+    /** @var string Exemption certificate number of the customer */
+    private string $avatax_exempt_no;
 
     /** @var float Subtotal of all items in the estimate */
      private float $sub_total;
@@ -140,6 +164,36 @@ class EstimateDto
     /** @var object Project details related to the estimate */
      private object $project;
 
+    /** @var string ID of the item */
+    private string $item_id;
+
+    /** @var string ID of the line item */
+    private string $line_item_id;
+
+    /** @var string The name of the line item */
+    private string $name;
+
+    /** @var string The description of the line items */
+    private string $description;
+
+    /** @var float Rate of the line item */
+    private float $rate;
+
+    /** @var string Unit of the line item */
+    private string $unit;
+
+    /** @var float The quantity of line item */
+    private float $quantity;
+
+    /** @var string ID of the project */
+    private string $project_id;
+
+    /** @var bool The accept_retainer */
+    private bool $accept_retainer;
+
+    /** @var int Pass the retainer_percentage node to create the retainer invoice automatically */
+    private int $retainer_percentage;
+
     /**
      * @param array $data
      */
@@ -156,6 +210,7 @@ class EstimateDto
         $this->gst_no = $data['gst_no'] ?? '';
         $this->gst_treatment = $data['gst_treatment'] ?? '';
         $this->tax_treatment = $data['tax_treatment'] ?? '';
+        $this->vat_treatment = $data['vat_treatment'] ?? '';
         $this->is_reverse_charge_applied = $data['is_reverse_charge_applied'] ?? false;
         $this->status = $data['status'] ?? '';
         $this->customer_id = $data['customer_id'] ?? '';
@@ -169,10 +224,17 @@ class EstimateDto
         $this->is_discount_before_tax = $data['is_discount_before_tax'] ?? false;
         $this->discount_type = $data['discount_type'] ?? '';
         $this->is_inclusive_tax = $data['is_inclusive_tax'] ?? false;
+        $this->custom_body = $data['custom_body'] ?? '';
+        $this->custom_subject = $data['custom_subject'] ?? '';
         $this->line_items = $data['line_items'] ?? [];
         $this->shipping_charge = $data['shipping_charge'] ?? '';
         $this->adjustment = $data['adjustment'] ?? 0.0;
         $this->adjustment_description = $data['adjustment_description'] ?? '';
+        $this->tax_id = $data['tax_id'] ?? '';
+        $this->tax_exemption_id = $data['tax_exemption_id'] ?? '';
+        $this->tax_authority_id = $data['tax_authority_id'] ?? '';
+        $this->avatax_use_code = $data['avatax_use_code'] ?? '';
+        $this->avatax_exempt_no = $data['avatax_exempt_no'] ?? '';
         $this->sub_total = $data['sub_total'] ?? 0.0;
         $this->total = $data['total'] ?? 0.0;
         $this->tax_total = $data['tax_total'] ?? 0.0;
@@ -190,6 +252,16 @@ class EstimateDto
         $this->salesperson_id = $data['salesperson_id'] ?? '';
         $this->salesperson_name = $data['salesperson_name'] ?? '';
         $this->project = $data['project'] ?? (object)[];
+        $this->item_id = $data['item_id'] ?? '';
+        $this->line_item_id = $data['line_item_id'] ?? '';
+        $this->name = $data['name'] ?? '';
+        $this->description = $data['description'] ?? '';
+        $this->rate = $data['rate'] ?? 0;
+        $this->unit = $data['unit'] ?? '';
+        $this->quantity = $data['quantity'] ?? 0;
+        $this->project_id = $data['project_id'] ?? '';
+        $this->accept_retainer = $data['accept_retainer'] ?? false;
+        $this->retainer_percentage = $data['retainer_percentage'] ?? 0;
     }
 
     /**

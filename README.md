@@ -28,6 +28,7 @@
 - [x] Authentication end points
 - [x] Contact end points
 - [x] Contact Person end points
+- [x] Estimate end points
 
 <details><summary>Coming soon features ✨</summary>
 
@@ -41,7 +42,6 @@
 - [ ] Currency end points
 - [ ] Customer Payment end points
 - [ ] Custom Module end points
-- [ ] Estimate end points
 - [ ] Expense end points
 - [ ] Invoice end points
 - [ ] Item end points
