@@ -6,8 +6,8 @@ use Sumer5020\ZohoBooks\Tests\TestCase;
 
 class ExampleFeatureTest extends TestCase
 {
-  public function testExample()
-  {
-    $this->assertEquals(1, 1);
-  }
+    public function testExample()
+    {
+        $this->assertEquals(1, 1);
+    }
 }

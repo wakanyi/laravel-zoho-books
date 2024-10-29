@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Facade;
 
 class ZohoBooksFacade extends Facade
 {
-    protected static function getFacadeAccessor() : string
-  {
-    return 'zohoBooks';
-  }
+    protected static function getFacadeAccessor(): string
+    {
+        return 'zohoBooks';
+    }
 }

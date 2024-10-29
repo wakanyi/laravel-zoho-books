@@ -16,7 +16,7 @@
     "yemenOpenSource",
     "GermanYemeniEngineersAssociation"
   ],
-  "version": "1.2.0",
+  "version": "1.2.1",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "authors": [

@@ -2,257 +2,240 @@
 
 namespace Sumer5020\ZohoBooks\Contracts;
 
-use Sumer5020\ZohoBooks\DTOs\Arguments\EstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\AddCommentsEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\CreateEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\DeleteCommentEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\EmailEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\EstimateFiltersDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\EstimateQpDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\GetEstimateEmailContentEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\UpdateAddressEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\UpdateCommentEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\UpdateCustomFieldEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\UpdateEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\UpdateEstimateTemplateEstimateDto;
 use Sumer5020\ZohoBooks\DTOs\PaginationDto;
-use Sumer5020\ZohoBooks\DTOs\QueryParameters\EstimateFiltersQpDto;
-use Sumer5020\ZohoBooks\DTOs\QueryParameters\EstimateQpDto;
 
-interface EstimateInterface {
+interface EstimateInterface
+{
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param EstimateDto $estimateDto
+     * @param string $organizationId
+     * @param CreateEstimateDto $createEstimateDto
      * @param EstimateQpDto $estimateQpDto
      *
      * @return array
      */
-    public function create(string $accessToken, string $organization_id, EstimateDto $estimateDto, EstimateQpDto $estimateQpDto): array;
+    public function create(string $accessToken, string $organizationId, CreateEstimateDto $createEstimateDto, EstimateQpDto $estimateQpDto): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param EstimateDto $estimateDto
+     * @param string $organizationId
+     * @param UpdateEstimateDto $updateEstimateDto
      * @param EstimateQpDto $estimateQpDto
      *
      * @return array
      */
-    public function update(string $accessToken, string $organization_id, string $estimate_id, EstimateDto $estimateDto, EstimateQpDto $estimateQpDto): array;
+    public function update(string $accessToken, string $organizationId, UpdateEstimateDto $updateEstimateDto, EstimateQpDto $estimateQpDto): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
+     * @param string $organizationId
      * @param PaginationDto $paginationDto
-     * @param EstimateFiltersQpDto $estimateFiltersDto
+     * @param EstimateFiltersDto $estimateFiltersDto
      *
      * @return array
      */
-    public function list(string $accessToken, string $organization_id, PaginationDto $paginationDto, EstimateFiltersQpDto $estimateFiltersDto): array;
+    public function list(string $accessToken, string $organizationId, PaginationDto $paginationDto, EstimateFiltersDto $estimateFiltersDto): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      * @param EstimateQpDto $estimateQpDto
      *
      * @return array
      */
-    public function get(string $accessToken, string $organization_id, string $estimate_id, EstimateQpDto $estimateQpDto): array;
+    public function get(string $accessToken, string $organizationId, string $estimateId, EstimateQpDto $estimateQpDto): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      *
      * @return array
      */
-    public function delete(string $accessToken, string $organization_id, string $estimate_id): array;
+    public function delete(string $accessToken, string $organizationId, string $estimateId): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $customfield_id
-     * @param string $value
+     * @param string $organizationId
+     * @param UpdateCustomFieldEstimateDto $updateCustomFieldEstimateDto
      *
      * @return array
      */
-    public function updateCustomField(string $accessToken, string $organization_id, string $estimate_id, string $customfield_id, string $value): array;
+    public function updateCustomField(string $accessToken, string $organizationId, UpdateCustomFieldEstimateDto $updateCustomFieldEstimateDto): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      *
      * @return array
      */
-    public function markAsSent(string $accessToken, string $organization_id, string $estimate_id): array;
+    public function markAsSent(string $accessToken, string $organizationId, string $estimateId): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      *
      * @return array
      */
-    public function markAsAccepted(string $accessToken, string $organization_id, string $estimate_id): array;
+    public function markAsAccepted(string $accessToken, string $organizationId, string $estimateId): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      *
      * @return array
      */
-    public function markAsDeclined(string $accessToken, string $organization_id, string $estimate_id): array;
+    public function markAsDeclined(string $accessToken, string $organizationId, string $estimateId): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      *
      * @return array
      */
-    public function submitForApproval(string $accessToken, string $organization_id, string $estimate_id): array;
+    public function submitForApproval(string $accessToken, string $organizationId, string $estimateId): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      *
      * @return array
      */
-    public function approve(string $accessToken, string $organization_id, string $estimate_id): array;
+    public function approve(string $accessToken, string $organizationId, string $estimateId): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param bool $send_from_org_email_id
-     * @param array $to_mail_ids
-     * @param array $cc_mail_ids
-     * @param string $subject
-     * @param string $body
+     * @param string $organizationId
+     * @param EmailEstimateDto $emailEstimateDto
+     *
      * @param EstimateQpDto $estimateQpDto
      *
      * @return array
      */
-    public function emailEstimate(string $accessToken, string $organization_id, string $estimate_id, bool $send_from_org_email_id, array $to_mail_ids, array $cc_mail_ids, string $subject, string $body, EstimateQpDto $estimateQpDto): array;
+    public function emailEstimate(string $accessToken, string $organizationId, EmailEstimateDto $emailEstimateDto, EstimateQpDto $estimateQpDto): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $email_template_id
+     * @param string $organizationId
+     * @param GetEstimateEmailContentEstimateDto $getEstimateEmailContentEstimateDto
      *
      * @return array
      */
-    public function getEstimateEmailContent(string $accessToken, string $organization_id, string $estimate_id, string $email_template_id): array;
+    public function getEstimateEmailContent(string $accessToken, string $organizationId, GetEstimateEmailContentEstimateDto $getEstimateEmailContentEstimateDto): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_ids
+     * @param string $organizationId
+     * @param string $estimateIds
      *
      * @return array
      */
-    public function emailMultipleEstimates(string $accessToken, string $organization_id, string $estimate_ids): array;
+    public function emailMultipleEstimates(string $accessToken, string $organizationId, string $estimateIds): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_ids
+     * @param string $organizationId
+     * @param string $estimateIds
      *
      * @return array
      */
-    public function bulkExportEstimates(string $accessToken, string $organization_id, string $estimate_ids): array;
+    public function bulkExportEstimates(string $accessToken, string $organizationId, string $estimateIds): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_ids
+     * @param string $organizationId
+     * @param string $estimateIds
      *
      * @return array
      */
-    public function bulkPrintEstimates(string $accessToken, string $organization_id, string $estimate_ids): array;
+    public function bulkPrintEstimates(string $accessToken, string $organizationId, string $estimateIds): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $address
-     * @param string $city
-     * @param string $state
-     * @param string $zip
-     * @param string $country
-     * @param string $fax
+     * @param string $organizationId
+     * @param UpdateAddressEstimateDto $updateBillingAddressEstimateDto
      *
      * @return array
      */
-    public function updateBillingAddress(string $accessToken, string $organization_id, string $estimate_id, string $address, string $city, string $state, string $zip, string $country, string $fax): array;
+    public function updateBillingAddress(string $accessToken, string $organizationId, UpdateAddressEstimateDto $updateBillingAddressEstimateDto): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $address
-     * @param string $city
-     * @param string $state
-     * @param string $zip
-     * @param string $country
-     * @param string $fax
+     * @param string $organizationId
+     * @param UpdateAddressEstimateDto $updateShippingAddressEstimateDto
      *
      * @return array
      */
-    public function updateShippingAddress(string $accessToken, string $organization_id, string $estimate_id, string $address, string $city, string $state, string $zip, string $country, string $fax): array;
+    public function updateShippingAddress(string $accessToken, string $organizationId, UpdateAddressEstimateDto $updateShippingAddressEstimateDto): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
+     * @param string $organizationId
      *
      * @return array
      */
-    public function listEstimateTemplate(string $accessToken, string $organization_id): array;
+    public function listEstimateTemplate(string $accessToken, string $organizationId): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $template_id
+     * @param string $organizationId
+     * @param UpdateEstimateTemplateEstimateDto $updateEstimateTemplateEstimateDto
      *
      * @return array
      */
-    public function updateEstimateTemplate(string $accessToken, string $organization_id, string $estimate_id, string $template_id): array;
+    public function updateEstimateTemplate(string $accessToken, string $organizationId, UpdateEstimateTemplateEstimateDto $updateEstimateTemplateEstimateDto): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $description
-     * @param bool $show_comment_to_clients
+     * @param string $organizationId
+     * @param AddCommentsEstimateDto $addCommentsEstimateDto
      *
      * @return array
      */
-    public function addComments(string $accessToken, string $organization_id, string $estimate_id, string $description, bool $show_comment_to_clients): array;
+    public function addComments(string $accessToken, string $organizationId, AddCommentsEstimateDto $addCommentsEstimateDto): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      *
      * @return array
      */
-    public function listEstimateCommentsAndHistory(string $accessToken, string $organization_id, string $estimate_id): array;
+    public function listEstimateCommentsAndHistory(string $accessToken, string $organizationId, string $estimateId): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $comment_id
-     * @param string $description
-     * @param bool $show_comment_to_clients
+     * @param string $organizationId
+     * @param UpdateCommentEstimateDto $updateCommentEstimateDto
      *
      * @return array
      */
-    public function updateComment(string $accessToken, string $organization_id, string $estimate_id, string $comment_id, string $description, bool $show_comment_to_clients): array;
+    public function updateComment(string $accessToken, string $organizationId, UpdateCommentEstimateDto $updateCommentEstimateDto): array;
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $comment_id
+     * @param string $organizationId
+     * @param DeleteCommentEstimateDto $deleteCommentEstimateDto
      *
      * @return array
      */
-    public function deleteComment(string $accessToken, string $organization_id, string $estimate_id, string $comment_id): array;
+    public function deleteComment(string $accessToken, string $organizationId, DeleteCommentEstimateDto $deleteCommentEstimateDto): array;
 }

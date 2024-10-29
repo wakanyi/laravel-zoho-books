@@ -2,9 +2,10 @@
 
 namespace Sumer5020\ZohoBooks\Tests\Unit;
 
-use Sumer5020\ZohoBooks\DTOs\Arguments\ContactDto;
+use Sumer5020\ZohoBooks\DTOs\Contact\ContactFiltersDto;
+use Sumer5020\ZohoBooks\DTOs\Contact\CreateContactDto;
+use Sumer5020\ZohoBooks\DTOs\Contact\UpdateContactDto;
 use Sumer5020\ZohoBooks\DTOs\PaginationDto;
-use Sumer5020\ZohoBooks\DTOs\QueryParameters\ContactFiltersQpDto;
 use Sumer5020\ZohoBooks\Facades\ZohoBooksFacade;
 use Sumer5020\ZohoBooks\Tests\TestCase;
 
@@ -13,12 +14,13 @@ class ContactUnitTest extends TestCase
     /**
      * @return void
      */
-    public function testCreateContact(){
+    public function testCreateContact()
+    {
         $accessToken = ZohoBooksFacade::authentications()->createAccessToken();
         $organization_id = '';
-        $contactDto = new ContactDto([]);
+        $createContactDto = new CreateContactDto([]);
 
-        $response = ZohoBooksFacade::contacts()->create($accessToken, $organization_id, $contactDto);
+        $response = ZohoBooksFacade::contacts()->create($accessToken, $organization_id, $createContactDto);
 
         $this->assertIsArray($response);
         $this->assertEquals(0, $response['code']);
@@ -27,12 +29,13 @@ class ContactUnitTest extends TestCase
     /**
      * @return void
      */
-    public function testUpdateContact(){
+    public function testUpdateContact()
+    {
         $accessToken = ZohoBooksFacade::authentications()->createAccessToken();
         $organization_id = '';
-        $contactDto = new ContactDto([]);
+        $updateContactDto = new UpdateContactDto([]);
 
-        $response = ZohoBooksFacade::contacts()->create($accessToken, $organization_id, $contactDto);
+        $response = ZohoBooksFacade::contacts()->create($accessToken, $organization_id, $updateContactDto);
 
         $this->assertIsArray($response);
         $this->assertEquals(0, $response['code']);
@@ -41,7 +44,8 @@ class ContactUnitTest extends TestCase
     /**
      * @return void
      */
-    public function testListContact(){
+    public function testListContact()
+    {
         $accessToken = ZohoBooksFacade::authentications()->createAccessToken();
         $organization_id = '';
 
@@ -49,7 +53,7 @@ class ContactUnitTest extends TestCase
             'page' => 1,
             'per_page' => 10
         ]);
-        $contactFiltersDto = new ContactFiltersQpDto([]);
+        $contactFiltersDto = new ContactFiltersDto([]);
 
         $response = ZohoBooksFacade::contacts()->list($accessToken, $organization_id, $paginationDto, $contactFiltersDto);
 
