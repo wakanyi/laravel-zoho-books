@@ -2,13 +2,17 @@
 
 namespace Sumer5020\ZohoBooks\DTOs;
 
+use Sumer5020\ZohoBooks\Traits\WithToQueryString;
+
 /**
  * Class PaginationDto
  * Data Transfer Object to Paginate the list.
  */
-class PaginationDto
+class PaginationDto extends Dto
 {
-    /** @var int Page number to be listed*/
+    use WithToQueryString;
+
+    /** @var int Page number to be listed */
     private int $page;
 
     /** @var int Items per page */
@@ -21,21 +25,5 @@ class PaginationDto
     {
         $this->page = $data['page'] ?? 1;
         $this->per_page = $data['per_page'] ?? 200;
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return [
-            'page' => $this->page,
-            'per_page' => $this->per_page
-        ];
-    }
-
-    public function toQueryString(): string
-    {
-        return "&page=$this->page&per_page=$this->per_page";
     }
 }

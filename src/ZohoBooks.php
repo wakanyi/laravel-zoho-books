@@ -65,6 +65,7 @@ class ZohoBooks
     {
         return $this->app->make(ContactInterface::class);
     }
+
     /**
      * @return BankAccountInterface
      */

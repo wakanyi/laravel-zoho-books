@@ -5,27 +5,36 @@ namespace Sumer5020\ZohoBooks\Services;
 use Exception;
 use Illuminate\Support\Facades\Http;
 use Sumer5020\ZohoBooks\Contracts\ContactPersonInterface;
-use Sumer5020\ZohoBooks\DTOs\Arguments\ContactPersonDto;
+use Sumer5020\ZohoBooks\DTOs\ContactPerson\CreateContactPersonDto;
+use Sumer5020\ZohoBooks\DTOs\ContactPerson\GetContactPersonDto;
+use Sumer5020\ZohoBooks\DTOs\ContactPerson\UpdateContactPersonDto;
 use Sumer5020\ZohoBooks\DTOs\PaginationDto;
+use Sumer5020\ZohoBooks\Rules\EstimateRule;
+use Sumer5020\ZohoBooks\Traits\WithDataValidate;
 
-class ContactPersonService implements ContactPersonInterface {
+class ContactPersonService implements ContactPersonInterface
+{
+    use WithDataValidate;
+
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param ContactPersonDto $contactPersonDto
+     * @param string $organizationId
+     * @param CreateContactPersonDto $createContactPersonDto
      *
      * @return array
      * @throws Exception
      */
-    public function create(string $accessToken, string $organization_id, ContactPersonDto $contactPersonDto): array
+    public function create(string $accessToken, string $organizationId, CreateContactPersonDto $createContactPersonDto): array
     {
-        $url = config('zohoBooks.url') . '/contacts/contactpersons?organization_id=' . $organization_id;
-
         try {
+            $data = $createContactPersonDto->toArray();
+            $this->validate($data, EstimateRule::toCreate());
+            $url = config('zohoBooks.url') . '/contacts/contactpersons?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
-            ])->post($url, $contactPersonDto->toArray())->json();
+            ])->post($url, $data)->json();
         } catch (Exception $e) {
             throw new Exception('Failed to create a contact person for contact. Response: ' . $e->getMessage());
         }
@@ -33,22 +42,23 @@ class ContactPersonService implements ContactPersonInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $contact_person_id
-     * @param ContactPersonDto $contactPersonDto
+     * @param string $organizationId
+     * @param UpdateContactPersonDto $updateContactPersonDto
      *
      * @return array
      * @throws Exception
      */
-    public function update(string $accessToken, string $organization_id, string $contact_person_id, ContactPersonDto $contactPersonDto): array
+    public function update(string $accessToken, string $organizationId, UpdateContactPersonDto $updateContactPersonDto): array
     {
-        $url = config('zohoBooks.url') . '/contacts/contactpersons/'.$contact_person_id.'?organization_id=' . $organization_id;
-
         try {
+            $data = $updateContactPersonDto->toArray();
+            $this->validate($data, EstimateRule::toUpdate());
+            $url = config('zohoBooks.url') . '/contacts/contactpersons/' . $updateContactPersonDto->getContactPersonId() . '?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
-            ])->put($url, $contactPersonDto->toArray())->json();
+            ])->put($url, $data)->json();
         } catch (Exception $e) {
             throw new Exception('Failed to update an existing contact person. Response: ' . $e->getMessage());
         }
@@ -56,17 +66,17 @@ class ContactPersonService implements ContactPersonInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $contact_person_id
+     * @param string $organizationId
+     * @param string $contactPersonId
      *
      * @return array
      * @throws Exception
      */
-    public function delete(string $accessToken, string $organization_id, string $contact_person_id): array
+    public function delete(string $accessToken, string $organizationId, string $contactPersonId): array
     {
-        $url = config('zohoBooks.url') . '/contacts/contactpersons/'.$contact_person_id.'?organization_id=' . $organization_id;
-
         try {
+            $url = config('zohoBooks.url') . '/contacts/contactpersons/' . $contactPersonId . '?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -78,18 +88,18 @@ class ContactPersonService implements ContactPersonInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $contact_id
+     * @param string $organizationId
+     * @param string $contactId
      * @param PaginationDto $paginationDto
      *
      * @return array
      * @throws Exception
      */
-    public function list(string $accessToken, string $organization_id, string $contact_id, PaginationDto $paginationDto = new PaginationDto([])): array
+    public function list(string $accessToken, string $organizationId, string $contactId, PaginationDto $paginationDto = new PaginationDto([])): array
     {
-        $url = config('zohoBooks.url') . '/contacts/'.$contact_id.'contactpersons?organization_id=' . $organization_id . $paginationDto->toQueryString();
-
         try {
+            $url = config('zohoBooks.url') . '/contacts/' . $contactId . 'contactpersons?organization_id=' . $organizationId . $paginationDto->toQueryString();
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -102,18 +112,18 @@ class ContactPersonService implements ContactPersonInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $contact_id
-     * @param string $contact_person_id
+     * @param string $organizationId
+     * @param GetContactPersonDto $getContactPersonDto
      *
      * @return array
      * @throws Exception
      */
-    public function get(string $accessToken, string $organization_id, string $contact_id, string $contact_person_id): array
+    public function get(string $accessToken, string $organizationId, GetContactPersonDto $getContactPersonDto): array
     {
-        $url = config('zohoBooks.url') . '/contacts/'.$contact_id.'/contactpersons/'.$contact_person_id.'?organization_id=' . $organization_id;
-
         try {
+            $this->validate($getContactPersonDto->toArray(), EstimateRule::toGet());
+            $url = config('zohoBooks.url') . '/contacts/' . $getContactPersonDto->getContactId() . '/contactpersons/' . $getContactPersonDto->getContactPersonId() . '?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -125,17 +135,17 @@ class ContactPersonService implements ContactPersonInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $contact_person_id
+     * @param string $organizationId
+     * @param string $contactPersonId
      *
      * @return array
      * @throws Exception
      */
-    public function markAsPrimary(string $accessToken, string $organization_id, string $contact_person_id): array
+    public function markAsPrimary(string $accessToken, string $organizationId, string $contactPersonId): array
     {
-        $url = config('zohoBooks.url') . '/contacts/contactpersons/'.$contact_person_id.'/primary?organization_id=' . $organization_id;
-
         try {
+            $url = config('zohoBooks.url') . '/contacts/contactpersons/' . $contactPersonId . '/primary?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',

@@ -5,30 +5,46 @@ namespace Sumer5020\ZohoBooks\Services;
 use Exception;
 use Illuminate\Support\Facades\Http;
 use Sumer5020\ZohoBooks\Contracts\EstimateInterface;
-use Sumer5020\ZohoBooks\DTOs\Arguments\EstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\AddCommentsEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\CreateEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\DeleteCommentEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\EmailEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\EstimateFiltersDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\EstimateQpDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\GetEstimateEmailContentEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\UpdateAddressEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\UpdateCommentEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\UpdateCustomFieldEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\UpdateEstimateDto;
+use Sumer5020\ZohoBooks\DTOs\Estimate\UpdateEstimateTemplateEstimateDto;
 use Sumer5020\ZohoBooks\DTOs\PaginationDto;
-use Sumer5020\ZohoBooks\DTOs\QueryParameters\EstimateFiltersQpDto;
-use Sumer5020\ZohoBooks\DTOs\QueryParameters\EstimateQpDto;
+use Sumer5020\ZohoBooks\Rules\EstimateRule;
+use Sumer5020\ZohoBooks\Traits\WithDataValidate;
 
-class EstimateService implements EstimateInterface {
+class EstimateService implements EstimateInterface
+{
+    use WithDataValidate;
+
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param EstimateDto $estimateDto
+     * @param string $organizationId
+     * @param CreateEstimateDto $createEstimateDto
      * @param EstimateQpDto $estimateQpDto
      *
      * @return array
      * @throws Exception
      */
-    public function create(string $accessToken, string $organization_id, EstimateDto $estimateDto, EstimateQpDto $estimateQpDto = new EstimateQpDto([])): array
+    public function create(string $accessToken, string $organizationId, CreateEstimateDto $createEstimateDto, EstimateQpDto $estimateQpDto = new EstimateQpDto([])): array
     {
-        $url = config('zohoBooks.url') . '/estimates?organization_id=' . $organization_id . $estimateQpDto->toQueryString();
-
         try {
+            $data = $createEstimateDto->toArray();
+            $this->validate($data, EstimateRule::toCreate());
+            $url = config('zohoBooks.url') . '/estimates?organization_id=' . $organizationId . $estimateQpDto->toQueryString();
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
-            ])->post($url, $estimateDto->toArray())->json();
+            ])->post($url, $data)->json();
         } catch (Exception $e) {
             throw new Exception('Failed to create an estimate for your customer. Response: ' . $e->getMessage());
         }
@@ -36,23 +52,24 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param EstimateDto $estimateDto
+     * @param string $organizationId
+     * @param UpdateEstimateDto $updateEstimateDto
      * @param EstimateQpDto $estimateQpDto
      *
      * @return array
      * @throws Exception
      */
-    public function update(string $accessToken, string $organization_id,string $estimate_id, EstimateDto $estimateDto, EstimateQpDto $estimateQpDto = new EstimateQpDto([])): array
+    public function update(string $accessToken, string $organizationId, UpdateEstimateDto $updateEstimateDto, EstimateQpDto $estimateQpDto = new EstimateQpDto([])): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'?organization_id=' . $organization_id . $estimateQpDto->toQueryString();
-
         try {
+            $data = $updateEstimateDto->toArray();
+            $this->validate($data, EstimateRule::toUpdate());
+            $url = config('zohoBooks.url') . '/estimates/' . $updateEstimateDto->getEstimateId() . '?organization_id=' . $organizationId . $estimateQpDto->toQueryString();
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
-            ])->put($url, $estimateDto->toArray())->json();
+            ])->put($url, $data)->json();
         } catch (Exception $e) {
             throw new Exception('Failed to create an estimate for your customer. Response: ' . $e->getMessage());
         }
@@ -60,18 +77,18 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
+     * @param string $organizationId
      * @param PaginationDto $paginationDto
-     * @param EstimateFiltersQpDto $estimateFiltersDto
+     * @param EstimateFiltersDto $estimateFiltersDto
      *
      * @return array
      * @throws Exception
      */
-    public function list(string $accessToken, string $organization_id, PaginationDto $paginationDto, EstimateFiltersQpDto $estimateFiltersDto): array
+    public function list(string $accessToken, string $organizationId, PaginationDto $paginationDto, EstimateFiltersDto $estimateFiltersDto): array
     {
-        $url = config('zohoBooks.url') . '/estimates?organization_id=' . $organization_id . $paginationDto->toQueryString() . $estimateFiltersDto->toQueryString();
-
         try {
+            $url = config('zohoBooks.url') . '/estimates?organization_id=' . $organizationId . $paginationDto->toQueryString() . $estimateFiltersDto->toQueryString();
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -84,18 +101,18 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      * @param EstimateQpDto $estimateQpDto
      *
      * @return array
      * @throws Exception
      */
-    public function get(string $accessToken, string $organization_id, string $estimate_id, EstimateQpDto $estimateQpDto): array
+    public function get(string $accessToken, string $organizationId, string $estimateId, EstimateQpDto $estimateQpDto): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'?organization_id=' . $organization_id.$estimateQpDto->toQueryString();
-
         try {
+            $url = config('zohoBooks.url') . '/estimates/' . $estimateId . '?organization_id=' . $organizationId . $estimateQpDto->toQueryString();
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -108,17 +125,17 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      *
      * @return array
      * @throws Exception
      */
-    public function delete(string $accessToken, string $organization_id, string $estimate_id): array
+    public function delete(string $accessToken, string $organizationId, string $estimateId): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'?organization_id=' . $organization_id;
-
         try {
+            $url = config('zohoBooks.url') . '/estimates/' . $estimateId . '?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -130,23 +147,19 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $customfield_id
-     * @param string $value
+     * @param string $organizationId
+     * @param UpdateCustomFieldEstimateDto $updateCustomFieldEstimateDto
      *
      * @return array
      * @throws Exception
      */
-    public function updateCustomField(string $accessToken, string $organization_id, string $estimate_id, string $customfield_id, string $value): array
+    public function updateCustomField(string $accessToken, string $organizationId, UpdateCustomFieldEstimateDto $updateCustomFieldEstimateDto): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/customfields?organization_id=' . $organization_id;
-        $data = [
-            'customfield_id' => $customfield_id,
-            'value' => $value
-        ];
-
         try {
+            $data = $updateCustomFieldEstimateDto->toArray();
+            $this->validate($data, EstimateRule::toUpdateCustomField());
+            $url = config('zohoBooks.url') . '/estimates/' . $updateCustomFieldEstimateDto->getEstimateId() . '/customfields?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -158,17 +171,17 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      *
      * @return array
      * @throws Exception
      */
-    public function markAsSent(string $accessToken, string $organization_id, string $estimate_id): array
+    public function markAsSent(string $accessToken, string $organizationId, string $estimateId): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/status/sent?organization_id=' . $organization_id;
-
         try {
+            $url = config('zohoBooks.url') . '/estimates/' . $estimateId . '/status/sent?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -180,17 +193,17 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      *
      * @return array
      * @throws Exception
      */
-    public function markAsAccepted(string $accessToken, string $organization_id, string $estimate_id): array
+    public function markAsAccepted(string $accessToken, string $organizationId, string $estimateId): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/status/accepted?organization_id=' . $organization_id;
-
         try {
+            $url = config('zohoBooks.url') . '/estimates/' . $estimateId . '/status/accepted?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -202,17 +215,17 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      *
      * @return array
      * @throws Exception
      */
-    public function markAsDeclined(string $accessToken, string $organization_id, string $estimate_id): array
+    public function markAsDeclined(string $accessToken, string $organizationId, string $estimateId): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/status/declined?organization_id=' . $organization_id;
-
         try {
+            $url = config('zohoBooks.url') . '/estimates/' . $estimateId . '/status/declined?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -224,17 +237,17 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      *
      * @return array
      * @throws Exception
      */
-    public function submitForApproval(string $accessToken, string $organization_id, string $estimate_id): array
+    public function submitForApproval(string $accessToken, string $organizationId, string $estimateId): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/submit?organization_id=' . $organization_id;
-
         try {
+            $url = config('zohoBooks.url') . '/estimates/' . $estimateId . '/submit?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -246,16 +259,17 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
+     *
      * @return array
      * @throws Exception
      */
-    public function approve(string $accessToken, string $organization_id, string $estimate_id): array
+    public function approve(string $accessToken, string $organizationId, string $estimateId): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/approve?organization_id=' . $organization_id;
-
         try {
+            $url = config('zohoBooks.url') . '/estimates/' . $estimateId . '/approve?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -267,33 +281,24 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param bool $send_from_org_email_id
-     * @param array $to_mail_ids
-     * @param array $cc_mail_ids
-     * @param string $subject
-     * @param string $body
+     * @param string $organizationId
+     * @param EmailEstimateDto $emailEstimateDto
      * @param EstimateQpDto $estimateQpDto
      *
      * @return array
      * @throws Exception
      */
-    public function emailEstimate(string $accessToken, string $organization_id, string $estimate_id, bool $send_from_org_email_id, array $to_mail_ids, array $cc_mail_ids, string $subject, string $body, EstimateQpDto $estimateQpDto = new EstimateQpDto([])): array
+    public function emailEstimate(string $accessToken, string $organizationId, EmailEstimateDto $emailEstimateDto, EstimateQpDto $estimateQpDto = new EstimateQpDto([])): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/email?organization_id=' . $organization_id.$estimateQpDto->toQueryString();
-        $data = [
-            'send_from_org_email_id' => $send_from_org_email_id,
-            'to_mail_ids' => $to_mail_ids,
-            'cc_mail_ids' => $cc_mail_ids,
-            'subject' => $subject,
-            'body' => $body,
-        ];
         try {
+            $data = $emailEstimateDto->toArray();
+            $this->validate($data, EstimateRule::toEmail());
+            $url = config('zohoBooks.url') . '/estimates/' . $emailEstimateDto->getEstimateId() . '/email?organization_id=' . $organizationId . $estimateQpDto->toQueryString();
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
-            ])->post($url,$data)->json();
+            ])->post($url, $data)->json();
         } catch (Exception $e) {
             throw new Exception('Failed to email an estimate to the customer. Response: ' . $e->getMessage());
         }
@@ -301,18 +306,18 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $email_template_id
+     * @param string $organizationId
+     * @param GetEstimateEmailContentEstimateDto $getEstimateEmailContentEstimateDto
      *
      * @return array
      * @throws Exception
      */
-    public function getEstimateEmailContent(string $accessToken, string $organization_id, string $estimate_id, string $email_template_id): array
+    public function getEstimateEmailContent(string $accessToken, string $organizationId, GetEstimateEmailContentEstimateDto $getEstimateEmailContentEstimateDto): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/email?organization_id=' . $organization_id.'&email_template_id='.$email_template_id;
-
         try {
+            $this->validate($getEstimateEmailContentEstimateDto->toArray(), EstimateRule::toGetEstimateEmailContent());
+            $url = config('zohoBooks.url') . '/estimates/' . $getEstimateEmailContentEstimateDto->getEstimateId() . '/email?organization_id=' . $organizationId . '&email_template_id=' . $getEstimateEmailContentEstimateDto->getEmailTemplateId();
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -325,17 +330,17 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_ids
+     * @param string $organizationId
+     * @param string $estimateIds
      *
      * @return array
      * @throws Exception
      */
-    public function emailMultipleEstimates(string $accessToken, string $organization_id, string $estimate_ids): array
+    public function emailMultipleEstimates(string $accessToken, string $organizationId, string $estimateIds): array
     {
-        $url = config('zohoBooks.url') . '/estimates/email?organization_id=' . $organization_id.'&estimate_ids='.$estimate_ids;
-
         try {
+            $url = config('zohoBooks.url') . '/estimates/email?organization_id=' . $organizationId . '&estimate_ids=' . $estimateIds;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -347,17 +352,17 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_ids
+     * @param string $organizationId
+     * @param string $estimateIds
      *
      * @return array
      * @throws Exception
      */
-    public function bulkExportEstimates(string $accessToken, string $organization_id, string $estimate_ids): array
+    public function bulkExportEstimates(string $accessToken, string $organizationId, string $estimateIds): array
     {
-        $url = config('zohoBooks.url') . '/estimates/pdf?organization_id=' . $organization_id.'&estimate_ids='.$estimate_ids;
-
         try {
+            $url = config('zohoBooks.url') . '/estimates/pdf?organization_id=' . $organizationId . '&estimate_ids=' . $estimateIds;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -370,17 +375,17 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_ids
+     * @param string $organizationId
+     * @param string $estimateIds
      *
      * @return array
      * @throws Exception
      */
-    public function bulkPrintEstimates(string $accessToken, string $organization_id, string $estimate_ids): array
+    public function bulkPrintEstimates(string $accessToken, string $organizationId, string $estimateIds): array
     {
-        $url = config('zohoBooks.url') . '/estimates/print?organization_id=' . $organization_id.'&estimate_ids='.$estimate_ids;
-
         try {
+            $url = config('zohoBooks.url') . '/estimates/print?organization_id=' . $organizationId . '&estimate_ids=' . $estimateIds;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -393,31 +398,19 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $address
-     * @param string $city
-     * @param string $state
-     * @param string $zip
-     * @param string $country
-     * @param string $fax
+     * @param string $organizationId
+     * @param UpdateAddressEstimateDto $updateBillingAddressEstimateDto
      *
      * @return array
      * @throws Exception
      */
-    public function updateBillingAddress(string $accessToken, string $organization_id, string $estimate_id, string $address, string $city, string $state, string $zip, string $country, string $fax): array
+    public function updateBillingAddress(string $accessToken, string $organizationId, UpdateAddressEstimateDto $updateBillingAddressEstimateDto): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/address/billing?organization_id=' . $organization_id;
-        $data = [
-            'address' => $address,
-            'city' => $city,
-            'state' => $state,
-            'zip' => $zip,
-            'country' => $country,
-            'fax' => $fax,
-        ];
-
         try {
+            $data = $updateBillingAddressEstimateDto->toArray();
+            $this->validate($data, EstimateRule::toUpdateAddress());
+            $url = config('zohoBooks.url') . '/estimates/' . $updateBillingAddressEstimateDto->getEstimateId() . '/address/billing?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -429,31 +422,19 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $address
-     * @param string $city
-     * @param string $state
-     * @param string $zip
-     * @param string $country
-     * @param string $fax
+     * @param string $organizationId
+     * @param UpdateAddressEstimateDto $updateShippingAddressEstimateDto
      *
      * @return array
      * @throws Exception
      */
-    public function updateShippingAddress(string $accessToken, string $organization_id, string $estimate_id, string $address, string $city, string $state, string $zip, string $country, string $fax): array
+    public function updateShippingAddress(string $accessToken, string $organizationId, UpdateAddressEstimateDto $updateShippingAddressEstimateDto): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/address/shipping?organization_id=' . $organization_id;
-        $data = [
-            'address' => $address,
-            'city' => $city,
-            'state' => $state,
-            'zip' => $zip,
-            'country' => $country,
-            'fax' => $fax,
-        ];
-
         try {
+            $data = $updateShippingAddressEstimateDto->toArray();
+            $this->validate($data, EstimateRule::toUpdateAddress());
+            $url = config('zohoBooks.url') . '/estimates/' . $updateShippingAddressEstimateDto->getEstimateId() . '/address/shipping?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -465,16 +446,16 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
+     * @param string $organizationId
      *
      * @return array
      * @throws Exception
      */
-    public function listEstimateTemplate(string $accessToken, string $organization_id): array
+    public function listEstimateTemplate(string $accessToken, string $organizationId): array
     {
-        $url = config('zohoBooks.url') . '/estimates/templates?organization_id=' . $organization_id;
-
         try {
+            $url = config('zohoBooks.url') . '/estimates/templates?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -487,18 +468,18 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $template_id
+     * @param string $organizationId
+     * @param UpdateEstimateTemplateEstimateDto $updateEstimateTemplateEstimateDto
      *
      * @return array
      * @throws Exception
      */
-    public function updateEstimateTemplate(string $accessToken, string $organization_id, string $estimate_id, string $template_id): array
+    public function updateEstimateTemplate(string $accessToken, string $organizationId, UpdateEstimateTemplateEstimateDto $updateEstimateTemplateEstimateDto): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/templates/'.$template_id.'?organization_id=' . $organization_id;
-
         try {
+            $this->validate($updateEstimateTemplateEstimateDto->toArray(), EstimateRule::toUpdateEstimateTemplate());
+            $url = config('zohoBooks.url') . '/estimates/' . $updateEstimateTemplateEstimateDto->getEstimateId() . '/templates/' . $updateEstimateTemplateEstimateDto->getTemplateId() . '?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -510,23 +491,19 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $description
-     * @param bool $show_comment_to_clients
+     * @param string $organizationId
+     * @param AddCommentsEstimateDto $addCommentsEstimateDto
      *
      * @return array
      * @throws Exception
      */
-    public function addComments(string $accessToken, string $organization_id, string $estimate_id, string $description, bool $show_comment_to_clients): array
+    public function addComments(string $accessToken, string $organizationId, AddCommentsEstimateDto $addCommentsEstimateDto): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/comments?organization_id=' . $organization_id;
-        $data = [
-            'description' => $description,
-            'show_comment_to_clients' => $show_comment_to_clients,
-        ];
-
         try {
+            $data = $addCommentsEstimateDto->toArray();
+            $this->validate($data, EstimateRule::toAddComments());
+            $url = config('zohoBooks.url') . '/estimates/' . $addCommentsEstimateDto->getEstimateId() . '/comments?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -538,17 +515,17 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
+     * @param string $organizationId
+     * @param string $estimateId
      *
      * @return array
      * @throws Exception
      */
-    public function listEstimateCommentsAndHistory(string $accessToken, string $organization_id, string $estimate_id): array
+    public function listEstimateCommentsAndHistory(string $accessToken, string $organizationId, string $estimateId): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/comments?organization_id=' . $organization_id;
-
         try {
+            $url = config('zohoBooks.url') . '/estimates/' . $estimateId . '/comments?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -561,24 +538,19 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $comment_id
-     * @param string $description
-     * @param bool $show_comment_to_clients
+     * @param string $organizationId
+     * @param UpdateCommentEstimateDto $updateCommentEstimateDto
      *
      * @return array
      * @throws Exception
      */
-    public function updateComment(string $accessToken, string $organization_id, string $estimate_id, string $comment_id, string $description, bool $show_comment_to_clients): array
+    public function updateComment(string $accessToken, string $organizationId, UpdateCommentEstimateDto $updateCommentEstimateDto): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/comments/'.$comment_id.'?organization_id=' . $organization_id;
-        $data = [
-            'description' => $description,
-            'show_comment_to_clients' => $show_comment_to_clients,
-        ];
-
         try {
+            $data = $updateCommentEstimateDto->toArray();
+            $this->validate($data, EstimateRule::toUpdateComment());
+            $url = config('zohoBooks.url') . '/estimates/' . $updateCommentEstimateDto->getEstimateId() . '/comments/' . $updateCommentEstimateDto->getCommentId() . '?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',
@@ -590,18 +562,18 @@ class EstimateService implements EstimateInterface {
 
     /**
      * @param string $accessToken
-     * @param string $organization_id
-     * @param string $estimate_id
-     * @param string $comment_id
+     * @param string $organizationId
+     * @param DeleteCommentEstimateDto $deleteCommentEstimateDto
      *
      * @return array
      * @throws Exception
      */
-    public function deleteComment(string $accessToken, string $organization_id, string $estimate_id, string $comment_id): array
+    public function deleteComment(string $accessToken, string $organizationId, DeleteCommentEstimateDto $deleteCommentEstimateDto): array
     {
-        $url = config('zohoBooks.url') . '/estimates/'.$estimate_id.'/comments/'.$comment_id.'?organization_id=' . $organization_id;
-
         try {
+            $this->validate($deleteCommentEstimateDto->toArray(), EstimateRule::toDeleteComment());
+            $url = config('zohoBooks.url') . '/estimates/' . $deleteCommentEstimateDto->getEstimateId() . '/comments/' . $deleteCommentEstimateDto->getCommentId() . '?organization_id=' . $organizationId;
+
             return Http::withHeaders([
                 'Authorization' => "Zoho-oauthtoken " . $accessToken,
                 'content-type' => 'application/json',

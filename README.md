@@ -13,7 +13,8 @@
 
 # Laravel Zoho Books
 
- This Laravel package simplifies integration with Zoho Books Accounting System, streamlining API interactions for easier accounting management.
+This Laravel package simplifies integration with Zoho Books Accounting System, streamlining API interactions for easier
+accounting management.
 
 ## Requirements
 
@@ -104,13 +105,16 @@ ZOHO_BOOKS_ACCESS_CODE=
 ZOHO_BOOKS_REDIRECT_URI=
 ```
 
-After that Run `php artisan zoho:init` command to initialize your credentials and insert `token`, `refresh_token` and `expires_in` into `zoho_tokens` table.
+After that Run `php artisan zoho:init` command to initialize your credentials and insert `token`, `refresh_token`
+and `expires_in` into `zoho_tokens` table.
 
-> **Alert:** We used `Self Client` to generate server-to-server access code. you must run the artisan command before the access code expired.
+> **Alert:** We used `Self Client` to generate server-to-server access code. you must run the artisan command before the
+> access code expired.
 
 > **Note:** The `expires_in` is for the `token`, The `refresh_token` is lifetime until you revoke it.
 
-> **Note:** In order to reduce the number of database requests and improve the performance you need to cache this token credentials with expire time equals the token expire time.
+> **Note:** In order to reduce the number of database requests and improve the performance you need to cache this token
+> credentials with expire time equals the token expire time.
 
 ## Usage
 

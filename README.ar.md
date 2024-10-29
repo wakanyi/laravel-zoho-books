@@ -15,54 +15,63 @@
 
 # لارافيل زوهو المحاسبية
 
- تقوم هذه الحزمة بتبسيط التكامل مع نظام المحاسبة زوهو بوكس، مما يسهل إدارة التفاعلات مع واجهة برمجة التطبيقات لتبسيط تمرير عمليات المحاسبة.
+تقوم هذه الحزمة بتبسيط التكامل مع نظام المحاسبة زوهو بوكس، مما يسهل إدارة التفاعلات مع واجهة برمجة التطبيقات لتبسيط
+تمرير عمليات المحاسبة.
 
 ## المتطلبات
 
-| الاصدار   | البرمجية   |
-|:----------|:-----------|
-| `^8.2`    | `php`      |
-| `^2.4`    | `Composer` |
-| `^11.0`   | `Laravel`  |
+| الاصدار | البرمجية   |
+|:--------|:-----------|
+| `^8.2`  | `php`      |
+| `^2.4`  | `Composer` |
+| `^11.0` | `Laravel`  |
 
 ## الميزات
 
-- [x] نقاط النهاية المصادقة
-- [x] نقاط النهاية لجهة الاتصال
-- [x] نقاط النهاية لشخص جهة الاتصال
-- [x] نقاط النهاية للتقدير
+<div dir="ltr" align="left">
+
+- [x] Authentication end points
+- [x] Contact end points
+- [x] Contact Person end points
+- [x] Estimate end points
+
+</div>
 
 <details><summary>الميزات القادمة قريبًا ✨</summary>
 
-- [ ] نقاط النهاية لحساب البنك
-- [ ] نقاط النهاية لقواعد البنك
-- [ ] نقاط النهاية لمعاملات البنك
-- [ ] نقاط النهاية لتعديل العملة الأساسية
-- [ ] نقاط النهاية للفواتير
-- [ ] نقاط النهاية للمخطط المحاسبي
-- [ ] نقاط النهاية لمذكرة الائتمان
-- [ ] نقاط النهاية للعملة
-- [ ] نقاط النهاية للدفع من العميل
-- [ ] نقاط النهاية للوحدة المخصصة
-- [ ] نقاط النهاية للنفقات
-- [ ] نقاط النهاية للفواتير
-- [ ] نقاط النهاية للبند
-- [ ] نقاط النهاية للمذكرات المحاسبية
-- [ ] نقاط النهاية لرصيد البداية
-- [ ] نقاط النهاية للمشروع
-- [ ] نقاط النهاية لأمر الشراء
-- [ ] نقاط النهاية للفواتير المتكررة
-- [ ] نقاط النهاية للنفقات المتكررة
-- [ ] نقاط النهاية للفواتير المتكررة
-- [ ] نقاط النهاية للفواتير المؤقتة
-- [ ] نقاط النهاية لأمر المبيعات
-- [ ] نقاط النهاية للمهام
-- [ ] نقاط النهاية للضرائب
-- [ ] نقاط النهاية لإدخال الوقت
-- [ ] نقاط النهاية للمستخدم
-- [ ] نقاط النهاية لمذكرة الائتمان من المورد
-- [ ] نقاط النهاية لدفع المورد
-- [ ] نقاط النهاية لتكامل Zoho CRM
+<div dir="ltr" align="left">
+
+- [ ] Bank Account end points
+- [ ] Bank Rule end points
+- [ ] Bank Transaction end points
+- [ ] Base Currency Adjustment end points
+- [ ] Bill end points
+- [ ] Chart Of Account end points
+- [ ] Credit Note end points
+- [ ] Currency end points
+- [ ] Customer Payment end points
+- [ ] Custom Module end points
+- [ ] Expense end points
+- [ ] Invoice end points
+- [ ] Item end points
+- [ ] Journal end points
+- [ ] Opening Balance end points
+- [ ] Project end points
+- [ ] Purchase Order end points
+- [ ] Recurring Bill end points
+- [ ] Recurring Expense end points
+- [ ] Recurring Invoice end points
+- [ ] Retainer Invoice end points
+- [ ] Sales Order end points
+- [ ] Task end points
+- [ ] Tax end points
+- [ ] Time Entry end points
+- [ ] User end points
+- [ ] Vendor Credit end points
+- [ ] Vendor Payment end points
+- [ ] Zoho Crm Integration end points
+
+</div>
 
 </details>
 
@@ -126,13 +135,16 @@ ZOHO_BOOKS_REDIRECT_URI=
 
 </div>
 
-بعد ذلك، قم بتشغيل الأمر `php artisan zoho:init` لتفعيل بيانات الاعتماد الخاصة بك وإدخال `token`, `refresh_token`, `expires_in` الى جدول `zoho_tokens`.
+بعد ذلك، قم بتشغيل الأمر `php artisan zoho:init` لتفعيل بيانات الاعتماد الخاصة بك
+وإدخال `token`, `refresh_token`, `expires_in` الى جدول `zoho_tokens`.
 
-> تنبيه: استخدمنا `Self Client` لإنشاء رمز وصول الخادم إلى الخادم. يجب تشغيل الأمر في موجه الاوامر قبل انتهاء صلاحية رمز الوصول.
+> تنبيه: استخدمنا `Self Client` لإنشاء رمز وصول الخادم إلى الخادم. يجب تشغيل الأمر في موجه الاوامر قبل انتهاء صلاحية رمز
+> الوصول.
 
 > ملاحظة: مدة صلاحية `expires_in` هي لـ `token،` بينما `refresh_token` صالح مدى الحياة حتى تقوم بإلغائه.
 
-> ملاحظة: لتقليل عدد الطلبات إلى قاعدة البيانات وتحسين الأداء، يجب عليك تخزين بيانات اعتماد رمز المصادقة مع وقت انتهاء يساوي مدة صلاحية الرمز في التخزين مؤقت.
+> ملاحظة: لتقليل عدد الطلبات إلى قاعدة البيانات وتحسين الأداء، يجب عليك تخزين بيانات اعتماد رمز المصادقة مع وقت انتهاء
+> يساوي مدة صلاحية الرمز في التخزين مؤقت.
 
 ## الاستخدام
 
@@ -147,6 +159,7 @@ use Sumer5020\ZohoBooks\Facades\ZohoBooksFacade;
 # أو
 use ZohoBooks;
 ```
+
 </div>
 
 ### المصادقة

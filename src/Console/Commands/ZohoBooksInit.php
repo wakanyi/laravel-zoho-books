@@ -20,12 +20,12 @@ class ZohoBooksInit extends Command
      *
      * @var string
      */
-    protected $description = 'Create ZOHO Books token credentials';
+    protected $description = 'CreateContactRule ZOHO Books token credentials';
 
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         try {
             $token = ZohoBooksFacade::authentications()->createAccessToken();
