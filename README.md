@@ -30,6 +30,7 @@ accounting management.
 - [x] Contact end points
 - [x] Contact Person end points
 - [x] Estimate end points
+- [x] Sales Order end points
 
 <details><summary>Coming soon features ✨</summary>
 
@@ -54,7 +55,6 @@ accounting management.
 - [ ] Recurring Expense end points
 - [ ] Recurring Invoice end points
 - [ ] Retainer Invoice end points
-- [ ] Sales Order end points
 - [ ] Task end points
 - [ ] Tax end points
 - [ ] Time Entry end points
@@ -108,12 +108,15 @@ ZOHO_BOOKS_REDIRECT_URI=
 After that Run `php artisan zoho:init` command to initialize your credentials and insert `token`, `refresh_token`
 and `expires_in` into `zoho_tokens` table.
 
-> **Alert:** We used `Self Client` to generate server-to-server access code. you must run the artisan command before the
-> access code expired.
+> [!WARNING]
+> We used `Self Client` to generate server-to-server access code. you must run the artisan command before the access
+> code expired.
 
-> **Note:** The `expires_in` is for the `token`, The `refresh_token` is lifetime until you revoke it.
+> [!NOTE]
+> The `expires_in` is for the `token`, The `refresh_token` is lifetime until you revoke it.
 
-> **Note:** In order to reduce the number of database requests and improve the performance you need to cache this token
+> [!NOTE]
+> In order to reduce the number of database requests and improve the performance you need to cache this token
 > credentials with expire time equals the token expire time.
 
 ## Usage
