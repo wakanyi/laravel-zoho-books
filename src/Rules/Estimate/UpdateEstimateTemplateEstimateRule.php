@@ -1,6 +1,6 @@
 <?php
 
-namespace Sumer5020\ZohoBooks\Rules\EstimateService;
+namespace Sumer5020\ZohoBooks\Rules\Estimate;
 
 class UpdateEstimateTemplateEstimateRule
 {

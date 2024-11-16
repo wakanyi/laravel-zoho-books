@@ -1,14 +1,13 @@
 <?php
 
-namespace Sumer5020\ZohoBooks\Rules\EstimateService;
+namespace Sumer5020\ZohoBooks\Rules\Estimate;
 
-class UpdateEstimateRule
+class CreateEstimateRule
 {
     public static function rules(): array
     {
         return [
             'customer_id' => 'required|string',
-            'estimate_id' => 'required|string',
             'currency_id' => 'sometimes|string',
             'contact_persons' => 'sometimes|array',
             'template_id' => 'sometimes|string',
