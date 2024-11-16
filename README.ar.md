@@ -34,6 +34,7 @@
 - [x] Contact end points
 - [x] Contact Person end points
 - [x] Estimate end points
+- [x] Sales Order end points
 
 </div>
 

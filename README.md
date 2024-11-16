@@ -30,6 +30,7 @@ accounting management.
 - [x] Contact end points
 - [x] Contact Person end points
 - [x] Estimate end points
+- [x] Sales Order end points
 
 <details><summary>Coming soon features ✨</summary>
 
@@ -54,7 +55,6 @@ accounting management.
 - [ ] Recurring Expense end points
 - [ ] Recurring Invoice end points
 - [ ] Retainer Invoice end points
-- [ ] Sales Order end points
 - [ ] Task end points
 - [ ] Tax end points
 - [ ] Time Entry end points
