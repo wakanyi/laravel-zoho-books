@@ -1,13 +1,13 @@
 <?php
 
-namespace Sumer5020\ZohoBooks\Rules\EstimateService;
+namespace Sumer5020\ZohoBooks\Rules\SalesOrder;
 
-class DeleteCommentsEstimateRule
+class DeleteCommentSalesOrderRule
 {
     public static function rules(): array
     {
         return [
-            'estimate_id' => 'required|string',
+            'salesorder_id' => 'required|string',
             'comment_id' => 'required|string',
         ];
     }

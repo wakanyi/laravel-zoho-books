@@ -2,16 +2,16 @@
 
 namespace Sumer5020\ZohoBooks\Rules;
 
-use Sumer5020\ZohoBooks\Rules\EstimateService\AddCommentsEstimateRule;
-use Sumer5020\ZohoBooks\Rules\EstimateService\CreateEstimateRule;
-use Sumer5020\ZohoBooks\Rules\EstimateService\DeleteCommentsEstimateRule;
-use Sumer5020\ZohoBooks\Rules\EstimateService\EmailEstimateRule;
-use Sumer5020\ZohoBooks\Rules\EstimateService\GetEstimateEmailContentEstimateRule;
-use Sumer5020\ZohoBooks\Rules\EstimateService\UpdateAddressEstimateRule;
-use Sumer5020\ZohoBooks\Rules\EstimateService\UpdateCommentsEstimateRule;
-use Sumer5020\ZohoBooks\Rules\EstimateService\UpdateCustomFieldEstimateRule;
-use Sumer5020\ZohoBooks\Rules\EstimateService\UpdateEstimateRule;
-use Sumer5020\ZohoBooks\Rules\EstimateService\UpdateEstimateTemplateEstimateRule;
+use Sumer5020\ZohoBooks\Rules\Estimate\AddCommentsEstimateRule;
+use Sumer5020\ZohoBooks\Rules\Estimate\CreateEstimateRule;
+use Sumer5020\ZohoBooks\Rules\Estimate\DeleteCommentsEstimateRule;
+use Sumer5020\ZohoBooks\Rules\Estimate\EmailEstimateRule;
+use Sumer5020\ZohoBooks\Rules\Estimate\GetEstimateEmailContentEstimateRule;
+use Sumer5020\ZohoBooks\Rules\Estimate\UpdateAddressEstimateRule;
+use Sumer5020\ZohoBooks\Rules\Estimate\UpdateCommentsEstimateRule;
+use Sumer5020\ZohoBooks\Rules\Estimate\UpdateCustomFieldEstimateRule;
+use Sumer5020\ZohoBooks\Rules\Estimate\UpdateEstimateRule;
+use Sumer5020\ZohoBooks\Rules\Estimate\UpdateEstimateTemplateEstimateRule;
 
 class EstimateRule
 {

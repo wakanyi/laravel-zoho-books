@@ -128,8 +128,8 @@ class EstimateFiltersDto extends Dto
         $this->date_end = $data['date_end'] ?? '';
         $this->date_before = $data['date_before'] ?? '';
         $this->date_after = $data['date_after'] ?? '';
-        $this->status = $data['status'] ?? EstimateSearchStatusEnum::SENT;
-        $this->filter_by = $data['filter_by'] ?? EstimateFilterStatusEnum::ALL;
+        $this->status = $data['status'] ?? EstimateSearchStatusEnum::SENT->value;
+        $this->filter_by = $data['filter_by'] ?? EstimateFilterStatusEnum::ALL->value;
         $this->search_text = $data['search_text'] ?? '';
         $this->sort_column = $data['sort_column'] ?? '';
         $this->zcrm_potential_id = $data['zcrm_potential_id'] ?? '';

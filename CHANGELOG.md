@@ -4,6 +4,18 @@ All releases of `sumer5020/laravel-zoho-books` will be announced here.
 
 -------------------------------
 
+## 1.3.0
+
+### Features:
+
+* Authentication Endpoints
+* Contact Endpoints
+* Contact Person Endpoints
+* Estimate Endpoints
+* Sales Order Endpoints
+
+-------------------------------
+
 ## 1.2.1
 
 ### Features:
